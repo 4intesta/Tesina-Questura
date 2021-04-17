@@ -25,9 +25,5 @@
     <input type="submit" />
 </form>
 
-
-kjggfdg
-
-andate a fare in culo
 </body>
 </html>
