@@ -4,6 +4,7 @@
 <%@page import="Tiw.Tesina3.MyAdmin" %>
 <%@page import="Tiw.Tesina3.MyAdminCreAcc" %>
 <%@page import="Tiw.Tesina3.MyAdminUpload" %>
+<%@page import="java.util.ArrayList" %>
 
 <html>
 <head>
@@ -12,8 +13,33 @@
 </head>
 <body>
 
+<form action="/myadmincreatescu">
+	<input type="text" name="nome" />
+	<select name="tipo">
+		  <option value="Scuola Media">Scuola Media</option>
+		  <option value="Liceo">Liceo</option>
+		  <option value="Istituto Tecnico">Istituto Tecnico</option>
+		  <option value="Istituto Professionale">Istituto Professionale</option>
+	</select>
+	<input type="text" name="latitudine" />
+	<input type="text" name="longitudine" />
+    <button id=generator type="submit">CREA SCUOLA</button>
+</form>
+
+<h1>------------------------------------------------------------</h1>
 
 <form action="/myadmincreate">
+	<input type="number" name ="accDaGenerare" placeholder="0"> 
+	<select name="tipo">
+	<% MyAdmin myAdm = new MyAdmin ();
+		ArrayList <String> lista = myAdm.queryScuole();
+		for(int i = 0; i<lista.size(); i++){
+	%>
+		  <option value="<%=lista.get(i)%>"><%=lista.get(i)%></option>
+		  
+	 <%} %>
+	</select>
+	
     <button id=generator type="submit">CREA ACCOUNT</button>
 </form>
 
@@ -24,6 +50,8 @@
     <input type="file" name="file" />
     <input type="submit" />
 </form>
+
+
 
 </body>
 </html>

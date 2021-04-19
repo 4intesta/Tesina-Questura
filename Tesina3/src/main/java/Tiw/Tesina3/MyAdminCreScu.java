@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "MyAdminCreAcc", value = "/myadmincreate")
+@WebServlet(name = "MyAdminCreScu", value = "/myadmincreatescu")
 
-public class MyAdminCreAcc  extends HttpServlet {
+public class MyAdminCreScu  extends HttpServlet {
 
 	  @Override
 	  public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -20,10 +20,13 @@ public class MyAdminCreAcc  extends HttpServlet {
 		  
 		  MyAdmin myAdm = new MyAdmin ();
 		  
-		  int num = Integer.parseInt(request.getParameter("accDaGenerare"));
+		  String nome = request.getParameter("nome");
+		  String tipo = request.getParameter("tipo");
+		  String longitudine = request.getParameter("longitudine");
+		  String latitudine = request.getParameter("latitudine");
+		 
 		  
-		  
-		  myAdm.createAccount(num);
+		  myAdm.createScuola(nome, tipo, longitudine, latitudine);
 		  
 		  response.sendRedirect("/index.jsp");
 	  }
