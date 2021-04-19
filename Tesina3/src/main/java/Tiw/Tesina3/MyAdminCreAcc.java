@@ -21,9 +21,9 @@ public class MyAdminCreAcc  extends HttpServlet {
 		  MyAdmin myAdm = new MyAdmin ();
 		  
 		  int num = Integer.parseInt(request.getParameter("accDaGenerare"));
+		  String scuola = request.getParameter("scuola");
 		  
-		  
-		  myAdm.createAccount(num);
+		  myAdm.createAccount(num, scuola);
 		  
 		  response.sendRedirect("/index.jsp");
 	  }

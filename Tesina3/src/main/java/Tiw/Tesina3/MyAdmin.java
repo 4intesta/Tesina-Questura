@@ -65,7 +65,7 @@ public class MyAdmin{
 	
 	
 	
-	public void createAccount(int num) {
+	public void createAccount(int num, String scuola) {
 		
 		for(int i = 0; i<num; i++) {
 		
@@ -92,6 +92,7 @@ public class MyAdmin{
 			
 			e.setProperty("username", usernameGenerato);
 			e.setProperty("password", passwordGenerata);
+			e.setProperty("scuola", scuola);
 			
 			ds.put(e);
 		}

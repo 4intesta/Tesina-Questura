@@ -30,7 +30,7 @@
 
 <form action="/myadmincreate">
 	<input type="number" name ="accDaGenerare" placeholder="0"> 
-	<select name="tipo">
+	<select name="scuola">
 	<% MyAdmin myAdm = new MyAdmin ();
 		ArrayList <String> lista = myAdm.queryScuole();
 		for(int i = 0; i<lista.size(); i++){
