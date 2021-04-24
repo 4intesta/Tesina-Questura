@@ -1,5 +1,7 @@
 package Tiw.Tesina3;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,47 @@ public class MyAdmin{
 		userService = UserServiceFactory.getUserService();
 		ds = DatastoreServiceFactory.getDatastoreService();
 	}
+	
+	
+	public void load() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("WEB-INF/Eventi.csv"));
+			String line;
+			int cont = 0;
+			br.readLine(); // skip header line
+			while((line = br.readLine())!=null) {
+				String[] e = line.toLowerCase().replaceAll("\"", "").split(";");
+				String nome = e[0].trim();
+				String ente = e[1].trim();
+				String periodo_da = e[2].trim();
+				String periodo_a = e[3].trim();
+				String classi= e[4].trim();
+				String n_studenti = e[5].trim();
+				String keyword = e[6].trim();
+				String extra = e[7].trim();
+				cont ++;
+				//System.out.println(anno+";"+regione+";"+cod+";"+nome+";"+indirizzo+";"+comune+";"+provincia);
+				
+			
+				Entity x = new Entity("EVENTI");
+				x.setProperty("nome", nome);
+				x.setProperty("ente", ente);
+				x.setProperty("periodo_da", periodo_da);
+				x.setProperty("periodo_a", periodo_a);
+				x.setProperty("classi", classi);
+				x.setProperty("n_studenti", n_studenti);
+				x.setProperty("keyword", keyword);
+				x.setProperty("extra", extra);
+				ds.put(x);
+				
+			}
+			br.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	
 	public void createScuola(String nome, String tipo, String longitudine, String latitudine) {
@@ -201,7 +244,6 @@ public class MyAdmin{
 	}
 	
 
-	
 	
  
 }
