@@ -22,11 +22,17 @@ public class MyAdminCreAcc  extends HttpServlet {
 		  
 		  int num = Integer.parseInt(request.getParameter("accDaGenerare"));
 		  String scuola = request.getParameter("scuola");
+		  String user = request.getParameter("username");
+		  String pass = request.getParameter("password");
+		  
+	
+		  
 		  
 		  myAdm.createAccount(num, scuola);
 		  
 		  response.sendRedirect("/index.jsp");
+		  System.out.println(scuola+" "+user+" "+pass);
 	  }
 
-	 
+	  
 	}

@@ -14,14 +14,18 @@
 <body>
 
 <form action="/myadmincreatescu">
+	<label for="date">Nome Scuola</label>
 	<input type="text" name="nome" />
+	<label for="date">Tipo di Scuola</label>
 	<select name="tipo">
 		  <option value="Scuola Media">Scuola Media</option>
 		  <option value="Liceo">Liceo</option>
 		  <option value="Istituto Tecnico">Istituto Tecnico</option>
 		  <option value="Istituto Professionale">Istituto Professionale</option>
 	</select>
+	<label for="date">Latitudine:</label>
 	<input type="text" name="latitudine" />
+	<label for="date">Longitudine:</label>
 	<input type="text" name="longitudine" />
     <button id=generator type="submit">CREA SCUOLA</button>
 </form>
@@ -45,12 +49,12 @@
 
 <h1>------------------------------------------------------------</h1>
 
+
 <form action="/upload" method="post" enctype="multipart/form-data">
     <input type="text" name="description" />
     <input type="file" name="file" />
     <input type="submit" />
 </form>
-
 
 
 </body>

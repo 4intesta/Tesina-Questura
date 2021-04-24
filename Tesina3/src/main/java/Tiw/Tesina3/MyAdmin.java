@@ -1,24 +1,22 @@
 package Tiw.Tesina3;
 
-import com.google.appengine.api.utils.SystemProperty;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.annotation.WebServlet;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.*;
-import com.google.appengine.api.users.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 @WebServlet(name = "MyAdmin", value = "/myadmin")
 public class MyAdmin{
@@ -62,14 +60,51 @@ public class MyAdmin{
 		return a;
 	}
 	
+/*
+
+	public void createAdmin () {
+		Entity e = new Entity ("ADMIN CREATI");String uChar1 = String.valueOf((int) Math.floor(Math.random()*10));
+		String uChar2 = String.valueOf((int) Math.floor(Math.random()*10));
+		String uChar3 = String.valueOf((int) Math.floor(Math.random()*10));
+		String uChar4 = String.valueOf((int) Math.floor(Math.random()*10));
+		String uChar5 = String.valueOf((int) Math.floor(Math.random()*10));
+		String uChar6 = String.valueOf((int) Math.floor(Math.random()*10));
+		String usernameGenerato = uChar1+uChar2+uChar3+uChar4+uChar5+uChar6;
+		
+		String pChar1 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar2 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar3 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar4 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar5 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar6 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar7 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar8 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar9 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar10 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar11 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar12 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar13 = String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar14= String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar15= String.valueOf((int) Math.floor(Math.random()*10));
+		String pChar16= String.valueOf((int) Math.floor(Math.random()*10));
+		
+		String passwordGenerata = pChar1+pChar2+pChar3+pChar4+pChar5+pChar6+pChar7+pChar8+pChar9+pChar10+pChar11+pChar12+pChar13+pChar14+pChar15+pChar16;
+		
+		e.setProperty("adminname", usernameGenerato);
+		e.setProperty("password", passwordGenerata);
+		
+		ds.put(e);
+	}
 	
-	
+	*/
 	
 	public void createAccount(int num, String scuola) {
 		
 		for(int i = 0; i<num; i++) {
 		
 			Entity e = new Entity ("ACCOUNT CREATI");
+			
+			
 			
 			String uChar1 = String.valueOf((int) Math.floor(Math.random()*10));
 			String uChar2 = String.valueOf((int) Math.floor(Math.random()*10));
@@ -95,8 +130,45 @@ public class MyAdmin{
 			e.setProperty("scuola", scuola);
 			
 			ds.put(e);
+			
+			
 		}
 	}
+	
+	
+	public HashMap<String, String> getLoginAdminCred (){
+		HashMap<String, String> logCred = new HashMap<String, String> ();
+		Query q = new Query("ADMIN CREATI");
+		FilterPredicate p = new FilterPredicate("password",FilterOperator.NOT_EQUAL,"");
+		q.setFilter(p);
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(999999));
+		for(int i = 0; i<list.size();i++) {
+			String user = list.get(i).getProperty("adminname").toString();
+			String psw = list.get(i).getProperty("password").toString();
+			logCred.put(user, psw);
+		}
+		return logCred;
+	}
+	
+	
+	public HashMap<String, String> getLoginCred (){
+		HashMap<String, String> logCred = new HashMap<String, String> ();
+		Query q = new Query("ACCOUNT CREATI");
+		FilterPredicate p = new FilterPredicate("password",FilterOperator.NOT_EQUAL,"");
+		q.setFilter(p);
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(999999));
+		for(int i = 0; i<list.size();i++) {
+			String user = list.get(i).getProperty("username").toString();
+			String psw = list.get(i).getProperty("password").toString();
+			logCred.put(user, psw);
+		}
+		return logCred;
+	}
+	
+	
+	
 	
 	
 	public void LeggiFileExcel (String file) {
@@ -128,7 +200,7 @@ public class MyAdmin{
 		
 	}
 	
-	
+
 	
 	
  
