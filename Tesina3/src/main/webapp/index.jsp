@@ -51,7 +51,14 @@
 
 
 <form action="/upload" method="post" enctype="multipart/form-data">
-    <input type="text" name="description" />
+	<select name="scuola">
+    <% 
+		ArrayList <String> lista2 = myAdm.queryScuole();
+		for(int i = 0; i<lista.size(); i++){
+	%>
+		  <option value="<%=lista2.get(i)%>"><%=lista.get(i)%></option>
+		  
+	 <%} %>
     <input type="file" name="file" />
     <input type="submit" />
 </form>
