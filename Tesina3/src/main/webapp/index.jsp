@@ -59,7 +59,7 @@
 		  <option value="<%=lista2.get(i)%>"><%=lista.get(i)%></option>
 		  
 	 <%} %>
-    <input type="file" name="file" />
+    <input type="file" name="file" multiple/>
     <input type="submit" />
 </form>
 
