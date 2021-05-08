@@ -35,65 +35,6 @@ public class MyAdmin{
 	}
 	
 	
-	public void load() {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("/Users/darioferrari/git/Tesina-Questura3/Tesina3/src/main/webapp/File_Creati/Dati.csv"));
-			String line;
-			
-			int cont_fine=0;
-			br.readLine();
-			br.readLine();// skip line 1 and 2
-			while(true) {
-				line=br.readLine();
-				if(cont_fine>10)break;
-				if(!line.contains("[a-zA-Z]+")) {cont_fine++;continue;}
-				if(!line.contains("[a-zA-Z]+"))cont_fine=0;
-				String[] e = line.toLowerCase().replaceAll("\"", "").split(";");
-				String as = e[0].trim();
-				String scuola = e[1].trim();
-				String comune = e[2].trim();
-				String via = e[3].trim();
-				String grado= e[4].trim();
-				String titolo = e[5].trim();
-				String periodo_da = e[6].trim();
-				String periodo_a = e[7].trim();
-				String soggetto = e[8].trim();
-				String n_ore = e[9].trim();
-				String n_studenti = e[10].trim();
-				String età_da = e[11].trim();
-				String età_a = e[12].trim();
-				String chiave = e[13].trim();
-				
-				
-				//System.out.println(anno+";"+regione+";"+cod+";"+nome+";"+indirizzo+";"+comune+";"+provincia);
-				
-			
-				Entity x = new Entity("EVENTI");
-				x.setProperty("as", as);
-				x.setProperty("scuola", scuola);
-				x.setProperty("comune", comune);
-				x.setProperty("via", via);
-				x.setProperty("grado",grado );
-				x.setProperty("titolo", titolo);
-				x.setProperty("periodo_da", periodo_da);
-				x.setProperty("periodo_a", periodo_a);
-				x.setProperty("soggetto", soggetto);
-				x.setProperty("n_ore", n_ore);
-				x.setProperty("n_studenti", n_studenti);
-				x.setProperty("età_da", età_da);
-				x.setProperty("età_a", età_a);
-				x.setProperty("chiave", chiave);
-				ds.put(x);
-				
-			}
-			br.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	
 	
 	public void createScuola(String nome, String tipo, String longitudine, String latitudine) {
 		Entity e = new Entity ("SCUOLE CREATE");
