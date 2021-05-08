@@ -37,7 +37,7 @@ public class MyAdmin{
 	
 	public void load() {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader());
+			BufferedReader br = new BufferedReader(new FileReader("/Users/darioferrari/git/Tesina-Questura3/Tesina3/src/main/webapp/File_Creati/Dati.csv"));
 			String line;
 			
 			int cont_fine=0;

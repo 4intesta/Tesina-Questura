@@ -36,7 +36,7 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>src/main/webapp/WEB-INF/Dati.csv</name>
+			<name>src/main/webapp/File_Creati/Dati.csv</name>
 			<type>1</type>
 			<location>/Users/darioferrari/Downloads/Dati_Progetto_Unimore.csv</location>
 		</link>
