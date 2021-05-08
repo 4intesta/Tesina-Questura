@@ -103,8 +103,8 @@ public class MyAdminUpload extends HttpServlet {
 					String soggetto = e[8].trim();
 					String n_ore = e[9].trim();
 					String n_studenti = e[10].trim();
-					String età_da = e[11].trim();
-					String età_a = e[12].trim();
+					String eta_da = e[11].trim();
+					String eta_a = e[12].trim();
 					String chiave = e[13].trim();
 					
 				
@@ -123,8 +123,8 @@ public class MyAdminUpload extends HttpServlet {
 					x.setProperty("soggetto", soggetto);
 					x.setProperty("n_ore", n_ore);
 					x.setProperty("n_studenti", n_studenti);
-					x.setProperty("età_da", età_da);
-					x.setProperty("età_a", età_a);
+					x.setProperty("eta_da", eta_da);
+					x.setProperty("eta_a", eta_a);
 					x.setProperty("chiave", chiave);
 					ds.put(x);
 					System.out.println("Piena");
