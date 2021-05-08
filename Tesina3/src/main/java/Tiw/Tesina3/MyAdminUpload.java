@@ -1,8 +1,11 @@
 package Tiw.Tesina3;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,14 +19,29 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
 
 				//https://stackoverflow.com/questions/2422468/how-to-upload-files-to-server-using-jsp-servlet
 
 @WebServlet(name = "MyAdminUpload", value = "/upload")
 @MultipartConfig
 public class MyAdminUpload extends HttpServlet {		
-
-	  @Override
+	private UserService userService;
+	private DatastoreService ds;
+	  
+	  
+	  public MyAdminUpload () {
+			userService = UserServiceFactory.getUserService();
+			ds = DatastoreServiceFactory.getDatastoreService();
+		} 
+	  
+	  
+	  
 	        /*
 	        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		    String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
@@ -58,10 +76,61 @@ public class MyAdminUpload extends HttpServlet {
 			
 			for(FileItem item : multifiles)
 			{
-				item.write(new File("File_Creati/"+item.getName()));
+				item.write(new File("/Users/darioferrari/git/Tesina-Questura3/Tesina3/src/main/webapp/File_Creati/"+item.getName()));
 			
-			}
 			
+			BufferedReader br = new BufferedReader(new FileReader("/Users/darioferrari/git/Tesina-Questura3/Tesina3/src/main/webapp/File_Creati/"+item.getName()));
+			String line;
+			
+			int cont_fine=0;
+			br.readLine();
+			br.readLine();// skip line 1 and 2
+			while(true) {
+				line=br.readLine();
+				if(cont_fine>10) {System.out.println("Fine");break;}
+				if(line.matches(".*[a-zA-Z].*")==false){cont_fine++;System.out.println("Vuota");continue;}
+				if(line.matches(".*[a-zA-Z].*")==true){
+					cont_fine=0;
+					String[] e = line.toLowerCase().replaceAll("\"", "").split(";");
+					String as = e[0].trim();
+					String scuola = e[1].trim();
+					String comune = e[2].trim();
+					String via = e[3].trim();
+					String grado= e[4].trim();
+					String titolo = e[5].trim();
+					String periodo_da = e[6].trim();
+					String periodo_a = e[7].trim();
+					String soggetto = e[8].trim();
+					String n_ore = e[9].trim();
+					String n_studenti = e[10].trim();
+					String età_da = e[11].trim();
+					String età_a = e[12].trim();
+					String chiave = e[13].trim();
+					
+				
+				//System.out.println(anno+";"+regione+";"+cod+";"+nome+";"+indirizzo+";"+comune+";"+provincia);
+				
+			
+					Entity x = new Entity("EVENTI");
+					x.setProperty("as", as);
+					x.setProperty("scuola", scuola);
+					x.setProperty("comune", comune);
+					x.setProperty("via", via);
+					x.setProperty("grado",grado );
+					x.setProperty("titolo", titolo);
+					x.setProperty("periodo_da", periodo_da);
+					x.setProperty("periodo_a", periodo_a);
+					x.setProperty("soggetto", soggetto);
+					x.setProperty("n_ore", n_ore);
+					x.setProperty("n_studenti", n_studenti);
+					x.setProperty("età_da", età_da);
+					x.setProperty("età_a", età_a);
+					x.setProperty("chiave", chiave);
+					ds.put(x);
+					System.out.println("Piena");
+					
+			}}
+			}	
 		}catch (Exception e){
 			System.out.println("CaccaPupu");
 

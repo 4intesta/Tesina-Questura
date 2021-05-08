@@ -34,11 +34,4 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/main/webapp/File_Creati/Dati.csv</name>
-			<type>1</type>
-			<location>/Users/darioferrari/Downloads/Dati_Progetto_Unimore.csv</location>
-		</link>
-	</linkedResources>
 </projectDescription>
