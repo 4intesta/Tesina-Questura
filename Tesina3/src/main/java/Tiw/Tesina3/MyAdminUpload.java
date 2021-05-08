@@ -58,7 +58,7 @@ public class MyAdminUpload extends HttpServlet {
 			
 			for(FileItem item : multifiles)
 			{
-				item.write(new File("/Tesina3/src/main/webapp/File_Creati/" + item.getName()));
+				item.write(new File("File_Creati/"+item.getName()));
 			
 			}
 			

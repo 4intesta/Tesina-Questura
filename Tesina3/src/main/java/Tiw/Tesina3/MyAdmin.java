@@ -37,33 +37,52 @@ public class MyAdmin{
 	
 	public void load() {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("WEB-INF/Eventi.csv"));
+			BufferedReader br = new BufferedReader(new FileReader());
 			String line;
-			int cont = 0;
-			br.readLine(); // skip header line
-			while((line = br.readLine())!=null) {
+			
+			int cont_fine=0;
+			br.readLine();
+			br.readLine();// skip line 1 and 2
+			while(true) {
+				line=br.readLine();
+				if(cont_fine>10)break;
+				if(!line.contains("[a-zA-Z]+")) {cont_fine++;continue;}
+				if(!line.contains("[a-zA-Z]+"))cont_fine=0;
 				String[] e = line.toLowerCase().replaceAll("\"", "").split(";");
-				String nome = e[0].trim();
-				String ente = e[1].trim();
-				String periodo_da = e[2].trim();
-				String periodo_a = e[3].trim();
-				String classi= e[4].trim();
-				String n_studenti = e[5].trim();
-				String keyword = e[6].trim();
-				String extra = e[7].trim();
-				cont ++;
+				String as = e[0].trim();
+				String scuola = e[1].trim();
+				String comune = e[2].trim();
+				String via = e[3].trim();
+				String grado= e[4].trim();
+				String titolo = e[5].trim();
+				String periodo_da = e[6].trim();
+				String periodo_a = e[7].trim();
+				String soggetto = e[8].trim();
+				String n_ore = e[9].trim();
+				String n_studenti = e[10].trim();
+				String età_da = e[11].trim();
+				String età_a = e[12].trim();
+				String chiave = e[13].trim();
+				
+				
 				//System.out.println(anno+";"+regione+";"+cod+";"+nome+";"+indirizzo+";"+comune+";"+provincia);
 				
 			
 				Entity x = new Entity("EVENTI");
-				x.setProperty("nome", nome);
-				x.setProperty("ente", ente);
+				x.setProperty("as", as);
+				x.setProperty("scuola", scuola);
+				x.setProperty("comune", comune);
+				x.setProperty("via", via);
+				x.setProperty("grado",grado );
+				x.setProperty("titolo", titolo);
 				x.setProperty("periodo_da", periodo_da);
 				x.setProperty("periodo_a", periodo_a);
-				x.setProperty("classi", classi);
+				x.setProperty("soggetto", soggetto);
+				x.setProperty("n_ore", n_ore);
 				x.setProperty("n_studenti", n_studenti);
-				x.setProperty("keyword", keyword);
-				x.setProperty("extra", extra);
+				x.setProperty("età_da", età_da);
+				x.setProperty("età_a", età_a);
+				x.setProperty("chiave", chiave);
 				ds.put(x);
 				
 			}
