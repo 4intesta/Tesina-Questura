@@ -1,7 +1,6 @@
 package Tiw.Tesina3;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.awt.RenderingHints.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,6 +135,37 @@ public class MyAdmin{
 			
 			
 		}
+	}
+  String infoAccEl = "";
+	
+	public void deleteAccount(String user) {
+		Query q = new Query("ACCOUNT CREATI");
+		q.addFilter("username", FilterOperator.EQUAL, user.trim());
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(1));
+		//System.out.println(list);
+		if(list.size()>0) {
+			com.google.appengine.api.datastore.Key azz = list.get(0).getKey();
+			System.out.println(azz.toString());
+			ds.delete(azz);
+			infoAccEl = "L'ultimo account eliminato è: "+list.get(0).getProperty("username")+" ("+list.get(0).getProperty("scuola")+")";
+		}
+		else {
+			System.out.println("L'account cercato non esiste");
+			infoAccEl = "";
+		}
+		
+	}
+	
+	public String infoEliminati() {
+		String info = "";
+		if(infoAccEl != "") {
+			info = infoAccEl;
+		}
+		else {
+			info = "L'account cercato non esiste";
+		}
+		return info;
 	}
 	
 	
