@@ -13,10 +13,12 @@
 
 <% Generale g=new Generale(); 
 ArrayList<String>longi = g.longScuole();
-ArrayList<String> lati=g.latScuole();
+ArrayList<String>lati = g.latScuole();
 
 
-System.out.println(lati.size());
+System.out.println(lati);
+System.out.println(longi);
+
 %>
 
    <style>
@@ -37,13 +39,14 @@ System.out.println(lati.size());
 	 
  }).addTo(mymap);
 
-for(let k=0; k<<%= lati.size()%>;k++){
+<%for(int k=0; k<lati.size();k++){%>
+
 var circle= L.circle([<%= lati.get(k)%>,<%= longi.get(k)%>],{
 color:'red',
 fillColor:'#f03',
 radius:1000
 }).addTo(mymap);
-}
+<%}%>
 
  </script>
 </html>
