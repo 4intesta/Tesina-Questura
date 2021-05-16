@@ -14,6 +14,7 @@
 <body>
 
 <form action="/myadmincreatescu">
+<h1>CREA SCUOLA</h1>
 	<label for="date">Nome Scuola</label>
 	<input type="text" name="nome" />
 	<label for="date">Tipo di Scuola</label>
@@ -33,6 +34,7 @@
 <h1>------------------------------------------------------------</h1>
 
 <form action="/myadmincreate">
+<h1>CREA ACCOUNT</h1>
 	<input type="number" name ="accDaGenerare" placeholder="0"> 
 	<select name="scuola">
 	<% MyAdmin myAdm = new MyAdmin ();
@@ -49,18 +51,63 @@
 
 <h1>------------------------------------------------------------</h1>
 
-
+<h1>CARICA CSV EVENTI</h1>
 <form action="/upload" method="post" enctype="multipart/form-data">
-	<select name="scuola">
-    <% 
-		ArrayList <String> lista2 = myAdm.queryScuole();
-		for(int i = 0; i<lista.size(); i++){
-	%>
-		  <option value="<%=lista2.get(i)%>"><%=lista.get(i)%></option>
-		  
-	 <%} %>
     <input type="file" name="file" multiple/>
     <input type="submit" />
+</form>
+
+
+
+<h1>------------------------------------------------------------</h1>
+
+
+<form action="/deleteAcc" method="get" enctype="multipart/form-data">
+		<h1>ELIMINA ACCOUNT</h1>
+		
+	<label for="date">username</label>
+	<input type="text" name="username" />
+	
+    <input type="submit" />
+    
+</form>
+
+<h1>------------------------------------------------------------</h1>
+
+
+<form action="/deleteScu" method="get" enctype="multipart/form-data">
+		<h1>ELIMINA SCUOLA E RELATIVI ACCOUNT</h1>
+		
+	<select name="scuola">
+    <% 
+		ArrayList <String> listaScu = myAdm.queryScuole();
+		for(int i = 0; i<listaScu.size(); i++){
+	%>
+		  <option value="<%=listaScu.get(i)%>"><%=listaScu.get(i)%></option>
+	
+	 <%} %>	
+	
+    <input type="submit" />
+    
+</form>
+
+<h1>------------------------------------------------------------</h1>
+
+
+<form action="/deleteEve" method="get" enctype="multipart/form-data">
+		<h1>ELIMINA EVENTI</h1>
+		
+	<select name="evento">
+    <% 
+		ArrayList <String> listaEve = myAdm.queryEventi();
+		for(int i = 0; i<listaEve.size(); i++){
+	%>
+		  <option value="<%=listaEve.get(i)%>"><%=listaEve.get(i)%></option>
+	
+	 <%} %>	
+	
+    <input type="submit" />
+    
 </form>
 
 

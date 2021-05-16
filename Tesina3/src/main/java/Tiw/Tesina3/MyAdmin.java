@@ -25,12 +25,13 @@ public class MyAdmin{
 	private UserService userService;
 	private DatastoreService ds;
 	
-	
+	String infoAccEl = "";
 	
 	
 	public MyAdmin () {
 		userService = UserServiceFactory.getUserService();
-		ds = DatastoreServiceFactory.getDatastoreService();
+		ds = DatastoreServiceFactory.getDatastoreService(); 
+		infoAccEl = "";
 	}
 	
 	
@@ -58,6 +59,21 @@ public class MyAdmin{
 		ArrayList<String> a = new ArrayList<String> (); 
 		for (Entity e : list) {
 			a.add(e.getProperty("nome").toString());
+		}
+		return a;
+	}
+	
+	public static ArrayList<String> queryEventi() {
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		Query q = new Query("EVENTI");
+		List<Filter> filters = new ArrayList<Filter>();
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(300));
+		StringBuffer sb = new StringBuffer();
+		ArrayList<String> a = new ArrayList<String> (); 
+		System.out.println(list.size());
+		for (Entity e : list) {
+			a.add(e.getProperty("titolo").toString()+" ("+e.getProperty("as").toString()+")");
 		}
 		return a;
 	}
@@ -136,7 +152,10 @@ public class MyAdmin{
 			
 		}
 	}
-  String infoAccEl = "";
+	
+
+	
+ 
 	
 	public void deleteAccount(String user) {
 		Query q = new Query("ACCOUNT CREATI");
@@ -167,6 +186,83 @@ public class MyAdmin{
 		}
 		return info;
 	}
+	
+
+	
+	
+	public void deleteScuola(String scuola) {
+		Query q = new Query("SCUOLE CREATE");
+		q.addFilter("nome", FilterOperator.EQUAL, scuola.trim());
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(1));
+		//System.out.println(list);
+		if(list.size()==1) {
+			com.google.appengine.api.datastore.Key azz = list.get(0).getKey();
+			System.out.println(azz.toString());
+			ds.delete(azz);
+			
+			Query qq = new Query("ACCOUNT CREATI");
+			qq.addFilter("scuola", FilterOperator.EQUAL, scuola.trim());
+			PreparedQuery pqq = ds.prepare(qq);
+			List<Entity> listStudenti = pqq.asList(FetchOptions.Builder.withLimit(999999));
+			for (int i = 0; i<listStudenti.size(); i++) {
+				com.google.appengine.api.datastore.Key chiave = listStudenti.get(i).getKey();
+				System.out.println(chiave.toString());
+				ds.delete(chiave);
+			}
+			
+			//	infoAccEl = "L'ultimo account eliminato è: "+list.get(0).getProperty("username")+" ("+list.get(0).getProperty("scuola")+")";
+		}
+		else {
+			System.out.println("L'account cercato non esiste");
+			infoAccEl = "";
+		}
+		
+	}
+	
+	public void deleteEventi(String eventi, String as) {
+		Query q = new Query("EVENTI");
+		q.addFilter("titolo", FilterOperator.EQUAL, eventi);
+		q.addFilter("as", FilterOperator.EQUAL, as);
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(1));
+		//System.out.println(list);
+		if(list.size()>0) {
+			com.google.appengine.api.datastore.Key azz = list.get(0).getKey();
+			System.out.println(azz.toString());
+			ds.delete(azz);
+			//infoAccEl = "L'ultimo account eliminato è: "+list.get(0).getProperty("username")+" ("+list.get(0).getProperty("scuola")+")";
+		}
+		else {
+			System.out.println("L'evento cercato non esiste");
+			//infoAccEl = "";
+		}
+		
+	}
+	
+/*	
+	public void deleteEventi (String user) {
+		Query q = new Query("ACCOUNT CREATI");
+		q.addFilter("username", FilterOperator.EQUAL, user.trim());
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(1));
+		//System.out.println(list);
+		if(list.size()>0) {
+			com.google.appengine.api.datastore.Key azz = list.get(0).getKey();
+			System.out.println(azz.toString());
+			ds.delete(azz);
+			infoAccEl = "L'ultimo account eliminato è: "+list.get(0).getProperty("username")+" ("+list.get(0).getProperty("scuola")+")";
+		}
+		else {
+			System.out.println("L'account cercato non esiste");
+			infoAccEl = "";
+		}
+		
+	}
+	
+	*/
+	
+	
 	
 	
 	public HashMap<String, String> getLoginAdminCred (){

@@ -76,17 +76,19 @@ public class MyAdminUpload extends HttpServlet {
 			
 			for(FileItem item : multifiles)
 			{
-				item.write(new File("/Users/darioferrari/git/Tesina-Questura3/Tesina3/src/main/webapp/File_Creati/"+item.getName()));
+				item.write(new File("C:\\Users\\basen\\git\\Tesina-Questura\\Tesina3\\src\\main\\webapp\\File_Creati"+item.getName()));
+				
 			
-			
-			BufferedReader br = new BufferedReader(new FileReader("/Users/darioferrari/git/Tesina-Questura3/Tesina3/src/main/webapp/File_Creati/"+item.getName()));
+			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\basen\\git\\Tesina-Questura\\Tesina3\\src\\main\\webapp\\File_Creati"+item.getName()));
 			String line;
 			
 			int cont_fine=0;
-			br.readLine();
-			br.readLine();// skip line 1 and 2
+			line = br.readLine(); System.out.println(line);
+			line = br.readLine(); System.out.println(line);   // skip line 1 and 2
 			while(true) {
+				
 				line=br.readLine();
+				System.out.println(line);
 				if(cont_fine>10) {System.out.println("Fine");break;}
 				if(line.matches(".*[a-zA-Z].*")==false){cont_fine++;System.out.println("Vuota");continue;}
 				if(line.matches(".*[a-zA-Z].*")==true){
@@ -132,7 +134,7 @@ public class MyAdminUpload extends HttpServlet {
 			}}
 			}	
 		}catch (Exception e){
-			System.out.println("CaccaPupu");
+			e.printStackTrace();
 
 		}
 			
