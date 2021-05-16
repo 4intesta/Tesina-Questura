@@ -20,7 +20,7 @@ public class MyAdminCreScu  extends HttpServlet {
 		  
 		  MyAdmin myAdm = new MyAdmin ();
 		  
-		  String nome = request.getParameter("nome");
+		  String nome = request.getParameter("nome").toLowerCase().replaceAll("\"", "");
 		  String tipo = request.getParameter("tipo");
 		  String longitudine = request.getParameter("longitudine");
 		  String latitudine = request.getParameter("latitudine");

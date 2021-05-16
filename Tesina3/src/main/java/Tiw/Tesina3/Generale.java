@@ -1,6 +1,7 @@
 package Tiw.Tesina3;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.appengine.api.datastore.DatastoreService;
@@ -61,4 +62,31 @@ public class Generale {
 		return a;
 	
 }
+	public static HashMap<String,ArrayList<String>> chiaviCord(){
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		Query q = new Query("SCUOLE CREATE");
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(300));
+		Query q1 = new Query("EVENTI");
+		PreparedQuery pq1 = ds.prepare(q1);
+		List<Entity> list1 = pq1.asList(FetchOptions.Builder.withLimit(300));
+		
+		StringBuffer sb = new StringBuffer();
+		HashMap<String, ArrayList<String>> ev=new HashMap<String, ArrayList<String>>();
+		for(Entity e:list1) {
+			ArrayList<String> a = new ArrayList<String> ();
+
+			for(Entity o:list) {
+				if(e.getProperty("scuola").equals(o.getProperty("nome"))) {
+					
+					a.add(o.getProperty("latitudine").toString());
+					a.add(o.getProperty("longitudine").toString());
+					ev.put(e.getProperty("titolo").toString()+"ç"+e.getProperty("chiave").toString(), a);
+				}
+			}
+			
+		}
+
+		return ev;
+	}
 }
