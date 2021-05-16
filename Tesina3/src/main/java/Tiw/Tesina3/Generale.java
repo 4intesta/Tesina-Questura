@@ -38,6 +38,25 @@ public class Generale {
 		ArrayList<String> a = new ArrayList<String> (); 
 		for (Entity e : list) {
 			a.add(e.getProperty("longitudine").toString());
+			System.out.println(e.getProperty("longitudine"));
+		}
+		return a;
+	
+}
+	public static ArrayList<String> latScuole() {
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		Query q = new Query("SCUOLE CREATE");
+		List<Filter> filters = new ArrayList<Filter>();
+		Filter f = new FilterPredicate("latitudine",FilterOperator.NOT_EQUAL,"ZZZ");
+		q.setFilter(f);
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(300));
+		
+		StringBuffer sb = new StringBuffer();
+		ArrayList<String> a = new ArrayList<String> (); 
+		for (Entity e : list) {
+			a.add(e.getProperty("latitudine").toString());
+			System.out.println(e.getProperty("latitudine"));
 		}
 		return a;
 	
