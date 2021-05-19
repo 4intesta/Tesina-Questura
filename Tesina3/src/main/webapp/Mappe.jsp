@@ -12,16 +12,17 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.util.HashMap" %>
 <% Generale g=new Generale(); 
-ArrayList<String>longi = g.longScuole();
-ArrayList<String>lati = g.latScuole();
 HashMap<String,ArrayList<String>>chiaviCord=g.chiaviCord();
+HashMap<String,ArrayList<String>>scuoleCord=g.CordScuole();
 for(String i:chiaviCord.keySet()){
-	String[]f=i.split("ç");
-	System.out.println(f[1]);
-if(f[1].equals("legalità")){
-	System.out.println("ok");
+System.out.println(chiaviCord.get(i).get(0)+" "+chiaviCord.get(i).get(1));
 }
+System.out.println();
+for(String i:scuoleCord.keySet()){
+System.out.println(scuoleCord.get(i).get(0)+" "+scuoleCord.get(i).get(1));
 }
+System.out.println();
+
 
 
 %>
@@ -44,16 +45,15 @@ if(f[1].equals("legalità")){
 	 
  }).addTo(mymap);
 
-<%for(int k=0; k<lati.size();k++){%>
+ <%for(String i:scuoleCord.keySet()){%>
 
-var circle= L.circle([<%= lati.get(k)%>,<%= longi.get(k)%>],{
+var circle= L.circle([<%= scuoleCord.get(i).get(0)%>,<%= scuoleCord.get(i).get(1)%>],{
 color:'red',
 fillColor:'#f03',
-radius:1000
+radius:100
 }).addTo(mymap);
 <%}%>
- </script>
- <script>
+
  var mymap2 = L.map('mapidE').setView([44.781811, 10.854439], 14);
  L.tileLayer('https://api.maptiler.com/maps/toner/{z}/{x}/{y}.png?key=GYJ2vr5kpPhplU9c4Lja',{
 	 attribution:'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
@@ -105,7 +105,8 @@ var circle= L.circle([<%= chiaviCord.get(i).get(0)%>,<%= chiaviCord.get(i).get(1
 	}).addTo(mymap2);	
 <%}%>
 <%}%>
- 
+
+
  </script>
 </html>
 

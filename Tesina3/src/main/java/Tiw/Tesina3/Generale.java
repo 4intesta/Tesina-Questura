@@ -26,42 +26,26 @@ public class Generale {
 		ds = DatastoreServiceFactory.getDatastoreService();
 	}
 	
-	public static ArrayList<String> longScuole() {
+	public static HashMap<String,ArrayList<String>> CordScuole() {
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		Query q = new Query("SCUOLE CREATE");
-		List<Filter> filters = new ArrayList<Filter>();
-		Filter f = new FilterPredicate("longitudine",FilterOperator.NOT_EQUAL,"ZZZ");
-		q.setFilter(f);
 		PreparedQuery pq = ds.prepare(q);
 		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(300));
 		
 		StringBuffer sb = new StringBuffer();
-		ArrayList<String> a = new ArrayList<String> (); 
-		for (Entity e : list) {
-			a.add(e.getProperty("longitudine").toString());
-			System.out.println(e.getProperty("longitudine"));
-		}
-		return a;
-	
-}
-	public static ArrayList<String> latScuole() {
-		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-		Query q = new Query("SCUOLE CREATE");
-		List<Filter> filters = new ArrayList<Filter>();
-		Filter f = new FilterPredicate("latitudine",FilterOperator.NOT_EQUAL,"ZZZ");
-		q.setFilter(f);
-		PreparedQuery pq = ds.prepare(q);
-		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(300));
 		
-		StringBuffer sb = new StringBuffer();
-		ArrayList<String> a = new ArrayList<String> (); 
+		HashMap<String, ArrayList<String>> sc=new HashMap<String, ArrayList<String>>();
+		
 		for (Entity e : list) {
+			ArrayList<String> a = new ArrayList<String> (); 		
 			a.add(e.getProperty("latitudine").toString());
-			System.out.println(e.getProperty("latitudine"));
+			a.add(e.getProperty("longitudine").toString());
+			sc.put(e.getProperty("nome").toString(), a);
 		}
-		return a;
+		return sc;
 	
 }
+
 	public static HashMap<String,ArrayList<String>> chiaviCord(){
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		Query q = new Query("SCUOLE CREATE");
@@ -81,7 +65,7 @@ public class Generale {
 					
 					a.add(o.getProperty("latitudine").toString());
 					a.add(o.getProperty("longitudine").toString());
-					ev.put(e.getProperty("titolo").toString()+"ç"+e.getProperty("chiave").toString(), a);
+					ev.put(e.getProperty("titolo").toString()+"ç"+e.getProperty("chiave").toString()+"ç"+e.getProperty("as").toString(), a);
 				}
 			}
 			
