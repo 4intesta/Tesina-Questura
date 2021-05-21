@@ -73,4 +73,27 @@ public class Generale {
 
 		return ev;
 	}
+	public static HashMap<String,ArrayList<String>> ScuoleEv(){
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		Query q = new Query("SCUOLE CREATE");
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(300));
+		Query q1 = new Query("EVENTI");
+		PreparedQuery pq1 = ds.prepare(q1);
+		List<Entity> list1 = pq1.asList(FetchOptions.Builder.withLimit(300));
+		
+		HashMap<String, ArrayList<String>> Sev=new HashMap<String, ArrayList<String>>();
+		for(Entity a:list) {
+			ArrayList<String> ar = new ArrayList<String> ();
+
+			for(Entity b:list1) {
+				if(a.getProperty("nome").equals(b.getProperty("scuola"))) {
+					ar.add(b.getProperty("chiave").toString());
+				}
+			}
+			Sev.put(a.getProperty("nome").toString(), ar);
+		}
+		return Sev;
+	}
+
 }
