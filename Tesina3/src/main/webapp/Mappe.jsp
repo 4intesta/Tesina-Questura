@@ -13,20 +13,38 @@
 <%@page import="java.util.HashMap" %>
 <%@page import="Tiw.Tesina3.MyAdmin" %>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<style>
+#mapidS { height: 500px; }
+#mapidE { height: 500px; }  
+
+.buttonBox{
+max-width:400px;
+}
+.buttonBox ul{
+display:flex;
+}
+.buttonBox ul li{
+list-style:none;
+}
+.btn {
+border-radius:20px;
+text-decoration:none;
+padding: 5px 10px;
+margin-right: 5px;
+background-color:#D3D3D3;
+}
+</style>
 <% Generale g=new Generale(); 
 HashMap<String,ArrayList<String>>chiaviCord=g.chiaviCord();
 HashMap<String,ArrayList<String>>scuoleCord=g.CordScuole();
 HashMap<String,ArrayList<String>>scuoleEv=g.ScuoleEv();
-System.out.println(scuoleEv);
+
 
 
 
 %>
 
-   <style>
-   #mapidS { height: 500px; }
-   #mapidE { height: 500px; }   
-   </style>
+
 
 </head>
 <body>
@@ -40,13 +58,13 @@ System.out.println(scuoleEv);
 
 <h1>Graph1:</h1>
 <canvas id="myChart"></canvas>
-<div class="chartBox">
+<div class="buttonBox">
 <ul>
 <%
 MyAdmin myAdm = new MyAdmin ();
 ArrayList <String> lista = myAdm.queryScuole();
 for(int k = 0; k<lista.size(); k++){
-	System.out.println(lista.get(k));
+
 %>
 <%
 int contRa=0;
@@ -56,9 +74,7 @@ int contDA=0;
 int contBC=0;
 	 for(String a:scuoleEv.keySet()){
 		if(a.equals(lista.get(k))){
-			System.out.println("ok");
 			for(int m=0; m<scuoleEv.get(a).size();m++){
-				//System.out.println(scuoleEv.get(a).get(m));
 				if(scuoleEv.get(a).get(m).equals("razzismo"))contRa++;
 				if(scuoleEv.get(a).get(m).equals("relazioni/emozioni"))contRE++;
 				if(scuoleEv.get(a).get(m).equals("legalità"))contLe++;
@@ -67,9 +83,8 @@ int contBC=0;
 			}
 		} 
 	 }
-	 System.out.println(contRa+" "+contRE+" "+contLe+" "+contBC+" "+contDA);
 	 %>
-<li><a href="#" class="btn blue" onclick="changeChart([<%=contRa%>, <%=contRE%>, <%=contLe%>, <%=contDA%>, <%=contBC%>])"><%=lista.get(k) %></a><%} %>
+<li><a class="btn blue" onclick="changeChart([<%=contRa%>, <%=contRE%>, <%=contLe%>, <%=contDA%>, <%=contBC%>])"><%=lista.get(k) %></a><%} %>
 </ul>
 </div>
 <h1>-----------------------------------------------------------</h1>
