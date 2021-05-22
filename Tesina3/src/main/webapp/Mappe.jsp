@@ -11,12 +11,13 @@
 <%@page import="Tiw.Tesina3.Generale" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.util.HashMap" %>
+<%@page import="Tiw.Tesina3.MyAdmin" %>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <% Generale g=new Generale(); 
 HashMap<String,ArrayList<String>>chiaviCord=g.chiaviCord();
 HashMap<String,ArrayList<String>>scuoleCord=g.CordScuole();
 HashMap<String,ArrayList<String>>scuoleEv=g.ScuoleEv();
-
+System.out.println(scuoleEv);
 
 
 
@@ -36,20 +37,50 @@ HashMap<String,ArrayList<String>>scuoleEv=g.ScuoleEv();
 <h1>Mappa Eventi</h1>
 <div id="mapidE"></div>
 <h1>-----------------------------------------------------------</h1>
+
 <h1>Graph1:</h1>
 <canvas id="myChart"></canvas>
+<div class="chartBox">
+<ul>
+<%
+MyAdmin myAdm = new MyAdmin ();
+ArrayList <String> lista = myAdm.queryScuole();
+for(int k = 0; k<lista.size(); k++){
+	System.out.println(lista.get(k));
+%>
+<%
+int contRa=0;
+int contRE=0;
+int contLe=0;
+int contDA=0;
+int contBC=0;
+	 for(String a:scuoleEv.keySet()){
+		if(a.equals(lista.get(k))){
+			System.out.println("ok");
+			for(int m=0; m<scuoleEv.get(a).size();m++){
+				//System.out.println(scuoleEv.get(a).get(m));
+				if(scuoleEv.get(a).get(m).equals("razzismo"))contRa++;
+				if(scuoleEv.get(a).get(m).equals("relazioni/emozioni"))contRE++;
+				if(scuoleEv.get(a).get(m).equals("legalità"))contLe++;
+				if(scuoleEv.get(a).get(m).equals("bullismo/cyberbullismo"))contBC++;
+				if(scuoleEv.get(a).get(m).equals("droghe/alcol"))contDA++;
+			}
+		} 
+	 }
+	 System.out.println(contRa+" "+contRE+" "+contLe+" "+contBC+" "+contDA);
+	 %>
+<li><a href="#" class="btn blue" onclick="changeChart([<%=contRa%>, <%=contRE%>, <%=contLe%>, <%=contDA%>, <%=contBC%>])"><%=lista.get(k) %></a><%} %>
+</ul>
+</div>
 <h1>-----------------------------------------------------------</h1>
 <h1>Graph2:</h1>
 <canvas id="myChart2"></canvas>
 </body>
 
-
-
-
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
 
  <script>
+ 
  var mymap = L.map('mapidS').setView([44.781811, 10.854439], 14);
  L.tileLayer('https://api.maptiler.com/maps/toner/{z}/{x}/{y}.png?key=GYJ2vr5kpPhplU9c4Lja',{
 	 attribution:'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
@@ -58,11 +89,8 @@ HashMap<String,ArrayList<String>>scuoleEv=g.ScuoleEv();
 
  <%for(String i:scuoleCord.keySet()){%>
 
-var circle= L.circle([<%= scuoleCord.get(i).get(0)%>,<%= scuoleCord.get(i).get(1)%>],{
-color:'red',
-fillColor:'#f03',
-radius:100
-}).addTo(mymap);
+var marker= L.marker([<%= scuoleCord.get(i).get(0)%>,<%= scuoleCord.get(i).get(1)%>]).addTo(mymap);
+
 <%}%>
 </script>
 <script>
@@ -112,60 +140,46 @@ var circle= L.circle([<%= chiaviCord.get(i).get(0)%>,<%= chiaviCord.get(i).get(1
 <%}%>
  </script>
  <script>
- var labels1=['razzismo','relazioni/emozioni','legalita','droghe/alcol','bullismo/cyberbullismo'];
- <%
- int contRa=0;
- int contRE=0;
- int contLe=0;
- int contDA=0;
- int contBC=0;
- for(String a:scuoleEv.keySet()){
-	if(a.equals("i.t. scaruffi levi  tricolore")){
-		for(int i=0; i<scuoleEv.get(a).size();i++){
-			if(scuoleEv.get(a).get(i).equals("razzismo"))contRa++;
-			if(scuoleEv.get(a).get(i).equals("relazioni/emozioni"))contRE++;
-			if(scuoleEv.get(a).get(i).equals("legalità"))contLe++;
-			if(scuoleEv.get(a).get(i).equals("bullismo/cyberbullismo"))contBC++;
-			if(scuoleEv.get(a).get(i).equals("droghe/alcol"))contDA++;
-		}
-	} 
- }
- %>
- var data1=[<%= contRa%>,<%= contRE%>,<%= contLe%>,<%= contDA%>,<%= contBC%>];
- var colors1=['brown','pink','green','yellow','blue'];
- 
- var myChart1=document.getElementById("myChart").getContext('2d');
- 
- var chart1=new Chart(myChart1, {
+ var ctx=document.getElementById("myChart").getContext('2d');
+ var myChart1=new Chart(ctx, {
 	type:'doughnut',
 	data:{
-		labels:labels1,
+		labels:['razzismo','relazioni/emozioni','legalita','droghe/alcol','bullismo/cyberbullismo'],
 		datasets:[{
-			data:data1,
-			backgroundColor:colors1
+			data:[1,1,2,1,1],
+			backgroundColor:['brown','pink','green','yellow','blue']
 		}]	
  },
  options:{
 	 title:{
-		 text:"Eventi in scaruffi",
+		 text:"Eventi Organizzati",
 		 display:true
 	 }
  }
  });
+ 
+ function changeChart(data){
+	 myChart1.data.datasets[0].data=data;
+	 myChart1.update();
+ }
  </script>
  <script>
+ 
+ 
  <%int cont=0;
  %>
+
  var chart2=new Chart(myChart2, {
 		type:'bar',
 		data:{
-			labels:labels1,
-			datasets:[<%for(String a:scuoleEv.keySet()){
-				 contRa=0;
-				 contRE=0;
-				 contLe=0;
-				 contDA=0;
-				 contBC=0;
+			labels:['razzismo','relazioni/emozioni','legalita','droghe/alcol','bullismo/cyberbullismo'],
+			datasets:[
+			<%for(String a:scuoleEv.keySet()){
+				int contRa=0;
+				int contRE=0;
+				int contLe=0;
+				int contDA=0;
+				int contBC=0;
 			if(cont<scuoleEv.size()-1){
 			%>{	
 				label:'<%=a%>',

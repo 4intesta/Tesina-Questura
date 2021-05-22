@@ -96,4 +96,5 @@ public class Generale {
 		return Sev;
 	}
 
+
 }

@@ -44,6 +44,7 @@ public class MyAdmin{
 		e.setProperty("latitudine", latitudine);
 		ds.put(e);
 	}
+	
 		
 
 	public static ArrayList<String> queryScuole() {
