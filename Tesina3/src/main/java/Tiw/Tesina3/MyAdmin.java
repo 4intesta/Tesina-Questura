@@ -44,7 +44,6 @@ public class MyAdmin{
 		e.setProperty("latitudine", latitudine);
 		ds.put(e);
 	}
-	
 		
 
 	public static ArrayList<String> queryScuole() {
@@ -64,6 +63,8 @@ public class MyAdmin{
 		return a;
 	}
 	
+	
+	
 	public static ArrayList<String> queryEventi() {
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		Query q = new Query("EVENTI");
@@ -78,6 +79,25 @@ public class MyAdmin{
 		}
 		return a;
 	}
+	
+	
+	
+
+	
+	public static List<Entity> getEventData() {
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		Query q = new Query("EVENTI");
+		List<Filter> filters = new ArrayList<Filter>();
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(300));
+		return list;
+	}
+	
+	
+	
+	
+	
+	
 	
 /*
 
@@ -221,6 +241,7 @@ public class MyAdmin{
 		
 	}
 	
+	
 	public void deleteEventi(String eventi, String as) {
 		Query q = new Query("EVENTI");
 		q.addFilter("titolo", FilterOperator.EQUAL, eventi);
@@ -240,6 +261,35 @@ public class MyAdmin{
 		}
 		
 	}
+	
+	
+	public void modifyEventi(String titolo, String as, String scuola, String comune, String via, String grado,String periodo_da, String periodo_a, 
+			String soggetto, String n_ore, String n_studenti, String eta_da, String eta_a, String keywords) {
+		Query q = new Query("EVENTI");
+		q.addFilter("titolo", FilterOperator.EQUAL, titolo);
+		q.addFilter("as", FilterOperator.EQUAL, as);
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(1));
+		Entity evento = list.get(0);
+		evento.setProperty("titolo", titolo);
+		evento.setProperty("as", as);
+		evento.setProperty("scuola", scuola);
+		evento.setProperty("comune", comune);
+		evento.setProperty("via", via);
+		evento.setProperty("grado", grado);
+		evento.setProperty("grado", grado);
+		evento.setProperty("periodo_da", periodo_da);
+		evento.setProperty("periodo_a", periodo_a);
+		evento.setProperty("soggetto", soggetto);
+		evento.setProperty("n_ore", n_ore);
+		evento.setProperty("n_studenti", n_studenti);
+		evento.setProperty("eta_da", eta_da);
+		evento.setProperty("eta_a", eta_a);
+		evento.setProperty("keywords", keywords);
+		ds.put(evento);
+	}
+	
+	
 	
 /*	
 	public void deleteEventi (String user) {

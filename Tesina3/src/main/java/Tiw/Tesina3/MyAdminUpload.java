@@ -76,10 +76,10 @@ public class MyAdminUpload extends HttpServlet {
 			
 			for(FileItem item : multifiles)
 			{
-				item.write(new File("/Users/darioferrari/git/Tesina-Questura4/Tesina3/src/main/webapp/File_Creati/"+item.getName()));
+				item.write(new File("C:\\Users\\basen\\git\\Tesina-Questura\\Tesina3\\src\\main\\webapp\\File_Creati\\"+item.getName()));
 				
 			
-			BufferedReader br = new BufferedReader(new FileReader("/Users/darioferrari/git/Tesina-Questura4/Tesina3/src/main/webapp/File_Creati/"+item.getName()));
+			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\basen\\git\\Tesina-Questura\\Tesina3\\src\\main\\webapp\\File_Creati\\"+item.getName()));
 			String line;
 			
 			int cont_fine=0;
