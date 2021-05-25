@@ -76,10 +76,10 @@ public class MyAdminUpload extends HttpServlet {
 			
 			for(FileItem item : multifiles)
 			{
-				item.write(new File("C:\\Users\\basen\\git\\Tesina-Questura\\Tesina3\\src\\main\\webapp\\File_Creati\\"+item.getName()));
+				item.write(new File("/Users/darioferrari/git/Tesina-Questura4/Tesina3/src/main/webapp/File_Creati/"+item.getName()));
 				
 			
-			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\basen\\git\\Tesina-Questura\\Tesina3\\src\\main\\webapp\\File_Creati\\"+item.getName()));
+			BufferedReader br = new BufferedReader(new FileReader("/Users/darioferrari/git/Tesina-Questura4/Tesina3/src/main/webapp/File_Creati/"+item.getName()));
 			String line;
 			
 			int cont_fine=0;
@@ -93,6 +93,11 @@ public class MyAdminUpload extends HttpServlet {
 				if(line.matches(".*[a-zA-Z].*")==false){cont_fine++;System.out.println("Vuota");continue;}
 				if(line.matches(".*[a-zA-Z].*")==true){
 					cont_fine=0;
+					line=line.replaceAll("à", "a");
+					line=line.replaceAll("ì", "i");
+					line=line.replaceAll("è", "e");
+					line=line.replaceAll("ò", "o");
+					line=line.replaceAll("ù", "u");
 					String[] e = line.toLowerCase().replaceAll("\"", "").split(";");
 					String as = e[0].trim();
 					String scuola = e[1].trim();

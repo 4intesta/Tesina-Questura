@@ -1,4 +1,3 @@
-
 <html>
 <head>
 
@@ -35,16 +34,14 @@ background-color:#D3D3D3;
 }
 </style>
 <% Generale g=new Generale(); 
-HashMap<String,ArrayList<String>>chiaviCord=g.chiaviCord();
+HashMap<String,ArrayList<String>>chiaviCordfattemalino=g.chiaviCordfattemalino();
+HashMap<String,ArrayList<ArrayList<String>>>chiaviCord=g.chiaviCord();
 HashMap<String,ArrayList<String>>scuoleCord=g.CordScuole();
 HashMap<String,ArrayList<String>>scuoleEv=g.ScuoleEv();
-
-
-
-
+//System.out.println(scuoleCord);
+//System.out.println(scuoleEv);
+//System.out.println(chiaviCord);
 %>
-
-
 
 </head>
 <body>
@@ -54,6 +51,15 @@ HashMap<String,ArrayList<String>>scuoleEv=g.ScuoleEv();
 <h1>-----------------------------------------------------------</h1>
 <h1>Mappa Eventi</h1>
 <div id="mapidE"></div>
+<div class="buttonBox">
+<ul>
+<li><a class="btn blue" onclick='changeMap1()'>droghe/alcol</a></li>
+<li><a class="btn blue" onclick='changeMap2()'>razzismo</a></li>
+<li><a class="btn blue" onclick='changeMap3()'>bullismo/cyberbullismo</a></li>
+<li><a class="btn blue" onclick='changeMap4()'>relazioni/emozioni</a></li>
+<li><a class="btn blue" onclick='changeMap5()'>legalita</a></li>
+</ul>
+</div>
 <h1>-----------------------------------------------------------</h1>
 
 <h1>Graph1:</h1>
@@ -77,7 +83,7 @@ int contBC=0;
 			for(int m=0; m<scuoleEv.get(a).size();m++){
 				if(scuoleEv.get(a).get(m).equals("razzismo"))contRa++;
 				if(scuoleEv.get(a).get(m).equals("relazioni/emozioni"))contRE++;
-				if(scuoleEv.get(a).get(m).equals("legalità"))contLe++;
+				if(scuoleEv.get(a).get(m).equals("legalita"))contLe++;
 				if(scuoleEv.get(a).get(m).equals("bullismo/cyberbullismo"))contBC++;
 				if(scuoleEv.get(a).get(m).equals("droghe/alcol"))contDA++;
 			}
@@ -109,50 +115,79 @@ var marker= L.marker([<%= scuoleCord.get(i).get(0)%>,<%= scuoleCord.get(i).get(1
 <%}%>
 </script>
 <script>
- var mymap2 = L.map('mapidE').setView([44.781811, 10.854439], 14);
- L.tileLayer('https://api.maptiler.com/maps/toner/{z}/{x}/{y}.png?key=GYJ2vr5kpPhplU9c4Lja',{
+var mymap2 = L.map('mapidE').setView([44.781811, 10.854439], 14);
+L.tileLayer('https://api.maptiler.com/maps/toner/{z}/{x}/{y}.png?key=GYJ2vr5kpPhplU9c4Lja',{
 	 attribution:'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
 	 
- }).addTo(mymap2);
+}).addTo(mymap2)
+var layerGroup=L.layerGroup().addTo(mymap2)
 
- <%for(String i:chiaviCord.keySet()){
-		String[]f=i.split("ç");
-	if(f[1].equals("legalità")){%>
-	var circle= L.circle([<%= chiaviCord.get(i).get(0)%>,<%= chiaviCord.get(i).get(1)%>],{
-		color:'green',
-		fillColor:'#00FF00',
-		radius:100
-		}).addTo(mymap2);	
-<%}%>
-<%if(f[1].equals("razzismo")){%>
-var circle= L.circle([<%= chiaviCord.get(i).get(0)%>,<%= chiaviCord.get(i).get(1)%>],{
-	color:'brown',
-	fillColor:'#CD853F',
-	radius:200
-	}).addTo(mymap2);	
-<%}%>
-<%if(f[1].equals("relazioni/emozioni")){%>
-var circle= L.circle([<%= chiaviCord.get(i).get(0)%>,<%= chiaviCord.get(i).get(1)%>],{
-	color:'pink',
-	fillColor:'#ffb6c1',
-	radius:300
-	}).addTo(mymap2);	
-<%}%>
-<%if(f[1].equals("droghe/alcol")){%>
-var circle= L.circle([<%= chiaviCord.get(i).get(0)%>,<%= chiaviCord.get(i).get(1)%>],{
-	color:'yellow',
-	fillColor:'#FFFF99',
-	radius:500
-	}).addTo(mymap2);	
-<%}%>
-<%if(f[1].equals("bullismo/cyberbullismo")){%>
-var circle= L.circle([<%= chiaviCord.get(i).get(0)%>,<%= chiaviCord.get(i).get(1)%>],{
-	color:'blue',
-	fillColor:'#696969',
-	radius:600
-	}).addTo(mymap2);	
-<%}%>
-<%}%>
+function changeMap1(){
+	layerGroup.clearLayers();
+	<%for(String a:chiaviCord.keySet()){
+		if(a.equals("droghe/alcol")){%>
+	
+	<%for(int i=0; i<chiaviCord.get(a).size();i++){
+			for(int j=0; j<chiaviCord.get(a).get(i).size();j++){%>
+				var marker=L.marker([<%=chiaviCord.get(a).get(i).get(0)%>,<%=chiaviCord.get(a).get(i).get(1)%>]).addTo(layerGroup);
+	<%			
+		}}
+	}
+	}%>
+}
+function changeMap2(){
+	layerGroup.clearLayers();
+	<%for(String a:chiaviCord.keySet()){
+		if(a.equals("razzismo")){%>
+		
+<%	for(int i=0; i<chiaviCord.get(a).size();i++){
+			for(int j=0; j<chiaviCord.get(a).get(i).size();j++){%>
+				var marker=L.marker([<%=chiaviCord.get(a).get(i).get(0)%>,<%=chiaviCord.get(a).get(i).get(1)%>]).addTo(layerGroup);
+	<%			
+		}}
+	}
+	}%>
+}
+function changeMap3(){
+	layerGroup.clearLayers();
+	<%for(String a:chiaviCord.keySet()){
+		if(a.equals("bullismo/cyberbullismo")){%>
+			
+		<%	for(int i=0; i<chiaviCord.get(a).size();i++){
+			for(int j=0; j<chiaviCord.get(a).get(i).size();j++){%>
+				
+			
+			var marker=L.marker([<%=chiaviCord.get(a).get(i).get(0)%>,<%=chiaviCord.get(a).get(i).get(1)%>]).addTo(layerGroup);
+	
+	<%			
+		}}
+	}
+	}%>
+}
+function changeMap4(){
+	layerGroup.clearLayers();
+	<%for(String a:chiaviCord.keySet()){
+		if(a.equals("relazioni/emozioni")){%>
+	<%for(int i=0; i<chiaviCord.get(a).size();i++){
+			for(int j=0; j<chiaviCord.get(a).get(i).size();j++){%>
+				var marker=L.marker([<%=chiaviCord.get(a).get(i).get(0)%>,<%=chiaviCord.get(a).get(i).get(1)%>]).addTo(layerGroup);
+	<%			
+		}}
+	}
+	}%>
+}
+function changeMap5(){
+	layerGroup.clearLayers();
+	<%for(String a:chiaviCord.keySet()){%>	
+	<%	if(a.equals("legalita")){
+	for(int i=0; i<chiaviCord.get(a).size();i++){
+			for(int j=0; j<chiaviCord.get(a).get(i).size();j++){%>
+				var marker=L.marker([<%=chiaviCord.get(a).get(i).get(0)%>,<%=chiaviCord.get(a).get(i).get(1)%>]).addTo(layerGroup);
+	<%			
+		}}
+	}
+	}%>
+}
  </script>
  <script>
  var ctx=document.getElementById("myChart").getContext('2d');
@@ -201,7 +236,7 @@ var circle= L.circle([<%= chiaviCord.get(i).get(0)%>,<%= chiaviCord.get(i).get(1
 				<%for(int i=0; i<scuoleEv.get(a).size();i++){
 					if(scuoleEv.get(a).get(i).equals("razzismo"))contRa++;
 					if(scuoleEv.get(a).get(i).equals("relazioni/emozioni"))contRE++;
-					if(scuoleEv.get(a).get(i).equals("legalità"))contLe++;
+					if(scuoleEv.get(a).get(i).equals("legalita"))contLe++;
 					if(scuoleEv.get(a).get(i).equals("bullismo/cyberbullismo"))contBC++;
 					if(scuoleEv.get(a).get(i).equals("droghe/alcol"))contDA++;
 				}%>
@@ -213,7 +248,7 @@ var circle= L.circle([<%= chiaviCord.get(i).get(0)%>,<%= chiaviCord.get(i).get(1
 			<%for(int i=0; i<scuoleEv.get(a).size();i++){
 				if(scuoleEv.get(a).get(i).equals("razzismo"))contRa++;
 				if(scuoleEv.get(a).get(i).equals("relazioni/emozioni"))contRE++;
-				if(scuoleEv.get(a).get(i).equals("legalità"))contLe++;
+				if(scuoleEv.get(a).get(i).equals("legalita"))contLe++;
 				if(scuoleEv.get(a).get(i).equals("bullismo/cyberbullismo"))contBC++;
 				if(scuoleEv.get(a).get(i).equals("droghe/alcol"))contDA++;
 			}%>
@@ -240,4 +275,3 @@ var circle= L.circle([<%= chiaviCord.get(i).get(0)%>,<%= chiaviCord.get(i).get(1
 
  </script>
 </html>
-

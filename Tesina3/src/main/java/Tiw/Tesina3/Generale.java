@@ -46,7 +46,7 @@ public class Generale {
 	
 }
 
-	public static HashMap<String,ArrayList<String>> chiaviCord(){
+	public static HashMap<String,ArrayList<String>> chiaviCordfattemalino(){
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		Query q = new Query("SCUOLE CREATE");
 		PreparedQuery pq = ds.prepare(q);
@@ -73,6 +73,46 @@ public class Generale {
 
 		return ev;
 	}
+	public static HashMap<String,ArrayList<ArrayList<String>>> chiaviCord(){
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		Query q = new Query("SCUOLE CREATE");
+		PreparedQuery pq = ds.prepare(q);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withLimit(300));
+		Query q1 = new Query("EVENTI");
+		PreparedQuery pq1 = ds.prepare(q1);
+		List<Entity> list1 = pq1.asList(FetchOptions.Builder.withLimit(300));
+		
+		StringBuffer sb = new StringBuffer();
+		HashMap<String, ArrayList<ArrayList<String>>> ev=new HashMap<String, ArrayList<	ArrayList<String>>>();
+		ArrayList<String> chiavi=new ArrayList<String>();
+		for(Entity e:list1) {
+			if(!chiavi.contains(e.getProperty("chiave").toString()))chiavi.add(e.getProperty("chiave").toString());
+			
+		}
+		
+		for(int i=0;i<chiavi.size();i++) {
+		ArrayList<ArrayList<String>> coordinate  = new ArrayList<ArrayList<String>> ();
+		for(Entity e:list1) {
+			if(chiavi.get(i).equals(e.getProperty("chiave").toString())) {
+			ArrayList<String>coordinata=new ArrayList<String>();
+			for(Entity o:list) {
+				if(e.getProperty("scuola").equals(o.getProperty("nome"))) {
+					coordinata.add(o.getProperty("latitudine").toString());
+					coordinata.add(o.getProperty("longitudine").toString());
+					if(!coordinate.contains(coordinata))coordinate.add(coordinata);
+				}
+			}	
+			System.out.println(coordinate);
+		}
+		}
+		ev.put(chiavi.get(i), coordinate);
+		}
+ System.out.println(ev);
+ 
+		return ev;
+	}	
+	
+	
 	public static HashMap<String,ArrayList<String>> ScuoleEv(){
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		Query q = new Query("SCUOLE CREATE");
@@ -98,3 +138,6 @@ public class Generale {
 
 
 }
+
+
+
