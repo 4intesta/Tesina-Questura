@@ -105,6 +105,7 @@ public class MyAdminUpload extends HttpServlet {
 					String via = e[3].trim();
 					String grado= e[4].trim();
 					String titolo = e[5].trim();
+					
 					String periodo_da = e[6].trim();
 					String periodo_a = e[7].trim();
 					String soggetto = e[8].trim();

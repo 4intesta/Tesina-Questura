@@ -12,6 +12,9 @@
 <%@page import="java.util.HashMap" %>
 <%@page import="Tiw.Tesina3.MyAdmin" %>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+     
 <style>
 #mapidS { height: 500px; }
 #mapidE { height: 500px; }  
@@ -38,6 +41,7 @@ HashMap<String,ArrayList<String>>chiaviCordfattemalino=g.chiaviCordfattemalino()
 HashMap<String,ArrayList<ArrayList<String>>>chiaviCord=g.chiaviCord();
 HashMap<String,ArrayList<String>>scuoleCord=g.CordScuole();
 HashMap<String,ArrayList<String>>scuoleEv=g.ScuoleEv();
+HashMap<String,ArrayList<ArrayList<String>>>dateEv=g.dateEv();
 //System.out.println(scuoleCord);
 //System.out.println(scuoleEv);
 //System.out.println(chiaviCord);
@@ -97,8 +101,25 @@ int contBC=0;
 <h1>Graph2:</h1>
 <canvas id="myChart2"></canvas>
 </body>
+<h1>-----------------------------------------------------------</h1>
+<h1>Graph3:</h1>
+<div id="calendar_basic" style="width: 1000px; height: 350px;"></div>
+<div class="buttonBox">
+<ul>
+<li><a class="btn blue" onclick='drawChart1()'>droghe/alcol</a></li>
+<li><a class="btn blue" onclick='drawChart2()'>razzismo</a></li>
+<li><a class="btn blue" onclick='drawChart3()'>bullismo/cyberbullismo</a></li>
+<li><a class="btn blue" onclick='drawChart4()'>relazioni/emozioni</a></li>
+<li><a class="btn blue" onclick='drawChart5()'>legalita</a></li>
+</ul>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+
+
+
+
 
  <script>
  
@@ -113,6 +134,18 @@ int contBC=0;
 var marker= L.marker([<%= scuoleCord.get(i).get(0)%>,<%= scuoleCord.get(i).get(1)%>]).addTo(mymap);
 
 <%}%>
+L.control.scale().addTo(mymap);
+var searchControl = new L.esri.Controls.Geosearch().addTo(mymap);
+var results = new L.LayerGroup().addTo(mymap);
+
+searchControl.on('results', function(data){
+  results.clearLayers();
+  for (var i = data.results.length - 1; i >= 0; i--) {
+    results.addLayer(L.marker(data.results[i].latlng));
+  }
+});
+
+
 </script>
 <script>
 var mymap2 = L.map('mapidE').setView([44.781811, 10.854439], 14);
@@ -271,7 +304,5 @@ function changeMap5(){
 	 }
 	 
  });
- 
-
  </script>
 </html>

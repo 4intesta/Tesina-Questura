@@ -137,6 +137,36 @@ public class Generale {
 	}
 
 
+	public static HashMap<String,ArrayList<ArrayList<String>>> dateEv(){
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		Query q1 = new Query("EVENTI");
+		PreparedQuery pq1 = ds.prepare(q1);
+		List<Entity> list1 = pq1.asList(FetchOptions.Builder.withLimit(300));
+		
+		StringBuffer sb = new StringBuffer();
+		HashMap<String, ArrayList<ArrayList<String>>> ev=new HashMap<String, ArrayList<	ArrayList<String>>>();
+		ArrayList<String> chiavi=new ArrayList<String>();
+		for(Entity e:list1) {
+			if(!chiavi.contains(e.getProperty("chiave").toString()))chiavi.add(e.getProperty("chiave").toString());
+			
+		}
+		
+		for(int i=0;i<chiavi.size();i++) {
+		ArrayList<ArrayList<String>> date  = new ArrayList<ArrayList<String>> ();
+		for(Entity e:list1) {
+			if(chiavi.get(i).equals(e.getProperty("chiave").toString())&&!e.getProperty("periodo_da").toString().isEmpty()) {
+			ArrayList<String>data=new ArrayList<String>();
+			data.add(e.getProperty("periodo_da").toString());
+			data.add(e.getProperty("periodo_a").toString());
+			date.add(data);
+		}
+		}
+		ev.put(chiavi.get(i), date);
+		}
+ System.out.println(ev);
+ 
+		return ev;
+	}	
 }
 
 
