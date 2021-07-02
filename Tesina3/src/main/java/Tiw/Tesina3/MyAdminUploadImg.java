@@ -45,7 +45,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 			{
 				String Nome=item.getName().replace(" ", "").replace(".", "").replace("png", "").replace("jpg", "");
 				
-				item.write(new File("/Users/darioferrari/git/Tesina-Questura4/Tesina3/src/main/webapp/Immagini/"+Nome+".png"));
+				item.write(new File("/Users/basen/git/Tesina-Questura4/Tesina3/src/main/webapp/Immagini/"+Nome+".png"));
 				
 			
 			}
