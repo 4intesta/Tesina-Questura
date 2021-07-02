@@ -60,8 +60,12 @@
     <input type="file" name="file" multiple/>
     <input type="submit" />
 </form>
-
-
+<h1>-------------------------------------------------------------</h1>
+<h1>CARICA foto su MAPPA</h1>
+<form action="/uploadimg" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept="image/*"multiple/>
+    <input type="submit" />
+</form>
 
 <h1>------------------------------------------------------------</h1>
 

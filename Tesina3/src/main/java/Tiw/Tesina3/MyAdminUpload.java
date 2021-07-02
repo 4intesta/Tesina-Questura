@@ -26,6 +26,8 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 
+
+
 				//https://stackoverflow.com/questions/2422468/how-to-upload-files-to-server-using-jsp-servlet
 
 @WebServlet(name = "MyAdminUpload", value = "/upload")
@@ -76,18 +78,18 @@ public class MyAdminUpload extends HttpServlet {
 			
 			for(FileItem item : multifiles)
 			{
-				item.write(new File("/Users/darioferrari/git/Tesina-Questura4/Tesina3/src/main/webapp/File_Creati/"+item.getName()));
+				item.write(new File("/Users/darioferrari/git/Tesina-Questura4/Tesina3/src/main/webapp/File_Creati/"+item.getName().replaceAll(" ","")));
 				
 			
-			BufferedReader br = new BufferedReader(new FileReader("/Users/darioferrari/git/Tesina-Questura4/Tesina3/src/main/webapp/File_Creati/"+item.getName()));
+			BufferedReader br = new BufferedReader(new FileReader("/Users/darioferrari/git/Tesina-Questura4/Tesina3/src/main/webapp/File_Creati/"+item.getName().replaceAll(" ","")));
 			String line;
 			
 			int cont_fine=0;
 			line = br.readLine(); System.out.println(line);
 			line = br.readLine(); System.out.println(line);   // skip line 1 and 2
-			while(true) {
+			while((line = br.readLine())!=null) {
 				
-				line=br.readLine();
+				//line=br.readLine();
 				System.out.println(line);
 				if(cont_fine>10) {System.out.println("Fine");break;}
 				if(line.matches(".*[a-zA-Z].*")==false){cont_fine++;System.out.println("Vuota");continue;}
@@ -137,24 +139,17 @@ public class MyAdminUpload extends HttpServlet {
 					ds.put(x);
 					System.out.println("Piena");
 					
-			}}
+			}}br.close();
 			}	
 		}catch (Exception e){
 			e.printStackTrace();
 
 		}
 			
-			System.out.println("file creato :D, Questo testo non verrà mai stampato!");
-			
-			
-			
-			
-			
-		
-		
-		
-		  
+			System.out.println("file creato :D, Questo testo non verrà mai stampato!");  
 		}
+	  
 
+		  
 	 
 	}

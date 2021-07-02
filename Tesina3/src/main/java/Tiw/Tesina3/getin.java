@@ -31,7 +31,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 		System.out.println("ESISTE LO USER");
 		
 		if(logCred.get(user).trim().equals(pass.trim())) {     //HashMap.get(CHIAVEUSER) = PASSWORD
-			response.sendRedirect("/home.jsp");
+			response.sendRedirect("/Mappe.jsp");
 			System.out.println("E LA PASSWORD E' CORRETTA");
 		}
 		else {
