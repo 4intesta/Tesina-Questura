@@ -285,7 +285,7 @@ int contBC=0;
   
     
      <button onclick="Nascondi()">Filtra!</button>
-    <button onclick="Reset()">Reset Filtro</button>
+ 	 <button onClick="window.location.reload();">Reset filtro</button>
     <h3>Risultati filtro:</h3>
     <table style="border:1px solid black">
     <tr>
@@ -304,16 +304,16 @@ int contBC=0;
 			List <Entity> listaEventi = mA.getEventData();
 			for(int i = 0; i<listaEventi.size(); i++){
 				%>
-		<tr id="<%=i%>" style="block">		
-		<td id="rTitolo<%=i%>"><%=listaEventi.get(i).getProperty("titolo").toString() %></td>
-	 	<td id="rAs<%=i%>"><%=listaEventi.get(i).getProperty("as").toString() %></td>
-	 	<td id="rScuola<%=i%>"><%=listaEventi.get(i).getProperty("scuola").toString() %></td>
-	 	<td id="rComune<%=i%>"><%=listaEventi.get(i).getProperty("comune").toString() %> 	</td>
-	 	<td id="rGrado<%=i%>"><%=listaEventi.get(i).getProperty("grado").toString() %> 	</td>
-	 	<td id="rPeriodoDa<%=i%>"><%=listaEventi.get(i).getProperty("periodo_da").toString() %></td>
-	 	<td id="rPeriodoA<%=i%>"><%=listaEventi.get(i).getProperty("periodo_a").toString() %></td>
-	 	<td id="rSoggetto<%=i%>"><%=listaEventi.get(i).getProperty("soggetto").toString() %></td>
-	 	<td id="rChiave<%=i%>"><%=listaEventi.get(i).getProperty("chiave").toString() %></td>
+		<tr id="<%=i%>" style="block; border:1px solid black">		
+		<td id="rTitolo<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("titolo").toString() %></td>
+	 	<td id="rAs<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("as").toString() %></td>
+	 	<td id="rScuola<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("scuola").toString() %></td>
+	 	<td id="rComune<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("comune").toString() %> 	</td>
+	 	<td id="rGrado<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("grado").toString() %> 	</td>
+	 	<td id="rPeriodoDa<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("periodo_da").toString() %></td>
+	 	<td id="rPeriodoA<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("periodo_a").toString() %></td>
+	 	<td id="rSoggetto<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("soggetto").toString() %></td>
+	 	<td id="rChiave<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("chiave").toString() %></td>
 	 	</tr>
 				<%
 		}
@@ -389,11 +389,7 @@ int contBC=0;
 	}
  }
  
- function Reset() {
-	 for(let i = 0; i<<%=listaEventi.size()%>; i++){
-		 document.getElementById(i).style.display = "block";
-	 }
- }
+
  
  
  
