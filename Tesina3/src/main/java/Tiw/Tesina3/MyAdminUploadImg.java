@@ -51,5 +51,6 @@ import com.google.appengine.api.users.UserServiceFactory;
 			}
 			}catch (Exception e){
 				e.printStackTrace();
-			}}
+			}
+		response.sendRedirect("/index.jsp");}
 	}

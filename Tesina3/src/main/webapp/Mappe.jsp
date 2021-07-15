@@ -12,8 +12,10 @@
 <%@page import="java.util.HashMap" %>
 <%@page import="Tiw.Tesina3.MyAdmin" %>
 <%@page import="java.io.File" %>
-<%@page import="java.util.List"%>
-<%@page import="com.google.appengine.api.datastore.Entity"%>
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.List" %>
+<%@page import="com.google.appengine.api.datastore.Entity" %>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
@@ -24,7 +26,7 @@
 <style>
 #mapidS { height: 500px; }
 #mapidE { height: 500px; }  
-
+#mapidV { height: 500px; } 
 .buttonBox{
 max-width:400px;
 }
@@ -118,210 +120,226 @@ int contBC=0;
 <li><a class="btn blue" onclick='drawChart4()'>relazioni/emozioni</a></li>
 <li><a class="btn blue" onclick='drawChart5()'>legalita</a></li>
 </ul>
+</div>
+
 
 <h1>-----------------------------------------------------------</h1>
 <h1>Cerca evento:</h1>
 <% MyAdmin mAd = new MyAdmin ();
-			List <Entity> listaEve = mAd.getEventData();
-			ArrayList <String> titoloDd = new ArrayList <String> (); titoloDd.add("---");
-			ArrayList <String> asDd = new ArrayList <String> (); asDd.add("---");
-			ArrayList <String> scuolaDd = new ArrayList <String> (); scuolaDd.add("---");
-			ArrayList <String> comuneDd = new ArrayList <String> (); comuneDd.add("---");
-			ArrayList <String> gradoDd = new ArrayList <String> (); gradoDd.add("---");
-			ArrayList <String> periododaDd = new ArrayList <String> (); periododaDd.add("---");
-			ArrayList <String> periodoaDd = new ArrayList <String> (); periodoaDd.add("---");
-			ArrayList <String> soggettoDd = new ArrayList <String> (); soggettoDd.add("---");
-			ArrayList <String> keywordsDd = new ArrayList <String> (); keywordsDd.add("---");
-			
-			for(int i = 0; i<listaEve.size(); i++){
-				if(titoloDd.contains(listaEve.get(i).getProperty("titolo").toString())){	
-				}else{titoloDd.add(listaEve.get(i).getProperty("titolo").toString());}
-	
-				if(asDd.contains(listaEve.get(i).getProperty("as").toString())){
-				}else{asDd.add(listaEve.get(i).getProperty("as").toString());}
-				
-				if(scuolaDd.contains(listaEve.get(i).getProperty("scuola").toString())){
-				}else{scuolaDd.add(listaEve.get(i).getProperty("scuola").toString());}
-				
-				if(comuneDd.contains(listaEve.get(i).getProperty("comune").toString())){
-				}else{comuneDd.add(listaEve.get(i).getProperty("comune").toString());}
-				
-				if(gradoDd.contains(listaEve.get(i).getProperty("grado").toString())){
-				}else{gradoDd.add(listaEve.get(i).getProperty("grado").toString());}
-				
-				if(periododaDd.contains(listaEve.get(i).getProperty("periodo_da").toString())){
-				}else{periododaDd.add(listaEve.get(i).getProperty("periodo_da").toString());}
-				
-				if(periodoaDd.contains(listaEve.get(i).getProperty("periodo_a").toString())){
-				}else{periodoaDd.add(listaEve.get(i).getProperty("periodo_a").toString());}
-				
-				if(soggettoDd.contains(listaEve.get(i).getProperty("soggetto").toString())){
-				}else{soggettoDd.add(listaEve.get(i).getProperty("soggetto").toString());}
-				
-				if(keywordsDd.contains(listaEve.get(i).getProperty("chiave").toString())){
-				}else{keywordsDd.add(listaEve.get(i).getProperty("chiave").toString());}
-			}
-			
-			
+                              List <Entity> listaEve = mAd.getEventData();
+                              ArrayList <String> titoloDd = new ArrayList <String> (); 
+                              ArrayList <String> asDd = new ArrayList <String> (); 
+                              ArrayList <String> scuolaDd = new ArrayList <String> (); 
+                              ArrayList <String> comuneDd = new ArrayList <String> (); 
+                              ArrayList <String> gradoDd = new ArrayList <String> (); 
+                              ArrayList <String> periododaDd = new ArrayList <String> (); 
+                              ArrayList <String> periodoaDd = new ArrayList <String> (); 
+                              ArrayList <String> soggettoDd = new ArrayList <String> (); 
+                              ArrayList <String> keywordsDd = new ArrayList <String> (); 
+                             
+                              for(int i = 0; i<listaEve.size(); i++){
+                                        if(titoloDd.contains(listaEve.get(i).getProperty("titolo").toString())){        
+                                        }else{titoloDd.add(listaEve.get(i).getProperty("titolo").toString());}
+         
+                                        if(asDd.contains(listaEve.get(i).getProperty("as").toString())){
+                                        }else{asDd.add(listaEve.get(i).getProperty("as").toString());}
+                                       
+                                        if(scuolaDd.contains(listaEve.get(i).getProperty("scuola").toString())){
+                                        }else{scuolaDd.add(listaEve.get(i).getProperty("scuola").toString());}
+                                       
+                                        if(comuneDd.contains(listaEve.get(i).getProperty("comune").toString())){
+                                        }else{comuneDd.add(listaEve.get(i).getProperty("comune").toString());}
+                                       
+                                        if(gradoDd.contains(listaEve.get(i).getProperty("grado").toString())){
+                                        }else{gradoDd.add(listaEve.get(i).getProperty("grado").toString());}
+                                       
+                                        if(periododaDd.contains(listaEve.get(i).getProperty("periodo_da").toString())){
+                                        }else{periododaDd.add(listaEve.get(i).getProperty("periodo_da").toString());}
+                                       
+                                        if(periodoaDd.contains(listaEve.get(i).getProperty("periodo_a").toString())){
+                                        }else{periodoaDd.add(listaEve.get(i).getProperty("periodo_a").toString());}
+                                       
+                                        if(soggettoDd.contains(listaEve.get(i).getProperty("soggetto").toString())){
+                                        }else{soggettoDd.add(listaEve.get(i).getProperty("soggetto").toString());}
+                                       
+                                        if(keywordsDd.contains(listaEve.get(i).getProperty("chiave").toString())){
+                                        }else{keywordsDd.add(listaEve.get(i).getProperty("chiave").toString());}
+                              }
+                             
+                             
 %>
-   
-   		<p>
-		   <label for="date">Titolo</label>
-			<select id="fTitolo">
-			<% 
-			for(int i = 0; i<titoloDd.size(); i++){
-			%>
-			 <option value="<%=titoloDd.get(i)%>"><%=titoloDd.get(i)%></option>
-			<%
-			}
-			%>
-			</select>
-		</p>	
-		
-		<p>
-		   <label for="date">Anno Scolastico</label>
-			<select id="fAs">
-			<% 
-			for(int i = 0; i<asDd.size(); i++){
-			%>
-			 <option value="<%=asDd.get(i)%>"><%=asDd.get(i)%></option>
-			<%
-			}
-			%>
-			</select>
-		</p>	
-		
-		<p>
-		   <label for="date">Scuola</label>
-			<select id="fScuola">
-			<% 
-			for(int i = 0; i<scuolaDd.size(); i++){
-			%>
-			 <option value="<%=scuolaDd.get(i)%>"><%=scuolaDd.get(i)%></option>
-			<%
-			}
-			%>
-			</select>
-		</p>	
-		
-		<p>
-		   <label for="date">Comune</label>
-			<select id="fComune">
-			<% 
-			for(int i = 0; i<comuneDd.size(); i++){
-			%>
-			 <option value="<%=comuneDd.get(i)%>"><%=comuneDd.get(i)%></option>
-			<%
-			}
-			%>
-			</select>
-		</p>	
-		
-		<p>
-		   <label for="date">Grado</label>
-			<select id="fGrado">
-			<% 
-			for(int i = 0; i<gradoDd.size(); i++){
-			%>
-			 <option value="<%=gradoDd.get(i)%>"><%=gradoDd.get(i)%></option>
-			<%
-			}
-			%>
-			</select>
-		</p>	
-		
-		<p>
-		   <label for="date">Periodo da</label>
-			<select id="fPeriodoDa">
-			<% 
-			for(int i = 0; i<periododaDd.size(); i++){
-			%>
-			 <option value="<%=periododaDd.get(i)%>"><%=periododaDd.get(i)%></option>
-			<%
-			}
-			%>
-			</select>
-		</p>	
-		
-		<p>
-		   <label for="date">Periodo a</label>
-			<select id="fPeriodoA">
-			<% 
-			for(int i = 0; i<periodoaDd.size(); i++){
-			%>
-			 <option value="<%=periodoaDd.get(i)%>"><%=periodoaDd.get(i)%></option>
-			<%
-			}
-			%>
-			</select>
-		</p>
-		
-		<p>
-		   <label for="date">Soggetto</label>
-			<select id="fSoggetto">
-			<% 
-			for(int i = 0; i<soggettoDd.size(); i++){
-			%>
-			 <option value="<%=soggettoDd.get(i)%>"><%=soggettoDd.get(i)%></option>
-			<%
-			}
-			%>
-			</select>
-		</p>
-		
-		<p>
-		   <label for="date">Keywords</label>
-			<select id="fChiave">
-			<% 
-			for(int i = 0; i<keywordsDd.size(); i++){
-			%>
-			 <option value="<%=keywordsDd.get(i)%>"><%=keywordsDd.get(i)%></option>
-			<%
-			}
-			%>
-			</select>
-		</p>
-		
   
+                    <p>
+                       <label for="date">Titolo</label>
+                              <select id="fTitolo">
+                              <%
+                              Collections.sort(titoloDd); titoloDd.add(0,"---");
+                              for(int i = 0; i<titoloDd.size(); i++){
+                              %>
+                              <option value="<%=titoloDd.get(i)%>"><%=titoloDd.get(i)%></option>
+                              <%
+                              }
+                              %>
+                              </select>
+                    </p> 
+                   
+                    <p>
+                       <label for="date">Anno Scolastico</label>
+                              <select id="fAs">
+                              <%
+                              Collections.sort(asDd); asDd.add(0,"---");
+                              for(int i = 0; i<asDd.size(); i++){
+                              %>
+                              <option value="<%=asDd.get(i)%>"><%=asDd.get(i)%></option>
+                              <%
+                              }
+                              %>
+                              </select>
+                    </p> 
+                   
+                    <p>
+                       <label for="date">Scuola</label>
+                              <select id="fScuola">
+                              <%
+                              Collections.sort(scuolaDd); scuolaDd.add(0,"---");
+                              for(int i = 0; i<scuolaDd.size(); i++){
+                              %>
+                              <option value="<%=scuolaDd.get(i)%>"><%=scuolaDd.get(i)%></option>
+                              <%
+                              }
+                              %>
+                              </select>
+                    </p> 
+                   
+                    <p>
+                       <label for="date">Comune</label>
+                              <select id="fComune">
+                              <%
+                              Collections.sort(comuneDd); comuneDd.add(0,"---");
+                              for(int i = 0; i<comuneDd.size(); i++){
+                              %>
+                              <option value="<%=comuneDd.get(i)%>"><%=comuneDd.get(i)%></option>
+                              <%
+                              }
+                              %>
+                              </select>
+                    </p> 
+                   
+                    <p>
+                       <label for="date">Grado</label>
+                              <select id="fGrado">
+                              <%
+                              Collections.sort(gradoDd); gradoDd.add(0,"---");
+                              for(int i = 0; i<gradoDd.size(); i++){
+                              %>
+                              <option value="<%=gradoDd.get(i)%>"><%=gradoDd.get(i)%></option>
+                              <%
+                              }
+                              %>
+                              </select>
+                    </p> 
+                   
+                    <p>
+                       <label for="date">Periodo da</label>
+                              <select id="fPeriodoDa">
+                              <%
+                              Collections.sort(periododaDd); periododaDd.add(0,"---");
+                              for(int i = 0; i<periododaDd.size(); i++){
+                              %>
+                              <option value="<%=periododaDd.get(i)%>"><%=periododaDd.get(i)%></option>
+                              <%
+                              }
+                              %>
+                              </select>
+                    </p> 
+                   
+                    <p>
+                      <label for="date">Periodo a</label>
+                              <select id="fPeriodoA">
+                              <%
+                              Collections.sort(periodoaDd); periodoaDd.add(0,"---");
+                              for(int i = 0; i<periodoaDd.size(); i++){
+                              %>
+                              <option value="<%=periodoaDd.get(i)%>"><%=periodoaDd.get(i)%></option>
+                              <%
+                              }
+                              %>
+                              </select>
+                    </p>
+                   
+                    <p>
+                       <label for="date">Soggetto</label>
+                              <select id="fSoggetto">
+                              <%
+                              Collections.sort(soggettoDd); soggettoDd.add(0,"---");
+                              for(int i = 0; i<soggettoDd.size(); i++){
+                              %>
+                              <option value="<%=soggettoDd.get(i)%>"><%=soggettoDd.get(i)%></option>
+                              <%
+                              }
+                              %>
+                              </select>
+                    </p>
+                   
+                    <p>
+                       <label for="date">Keywords</label>
+                              <select id="fChiave">
+                              <%
+                              Collections.sort(keywordsDd); keywordsDd.add(0,"---");
+                              for(int i = 0; i<keywordsDd.size(); i++){
+                              %>
+                              <option value="<%=keywordsDd.get(i)%>"><%=keywordsDd.get(i)%></option>
+                              <%
+                              }
+                              %>
+                              </select>
+                    </p>
+                   
+ 
     
      <button onclick="Nascondi()">Filtra!</button>
- 	 <button onClick="window.location.reload();">Reset filtro</button>
+          <button onClick="window.location.reload();">Reset filtro</button>
     <h3>Risultati filtro:</h3>
-    <table style="border:1px solid black">
+    <table style="border:1px solid black" id="mytable">
     <tr>
-    	<th>Titolo</th>
-    	<th>Anno Scolastico</th>
-    	<th>Scuola</th>
-    	<th>Comune</th>
-    	<th>Grado</th>
-    	<th>Periodo da</th>
-    	<th>Periodo a</th>
-    	<th>Soggetto</th>
-    	<th>Keywords</th>
+          <th>Titolo</th>
+          <th>Anno Scolastico</th>
+          <th>Scuola</th>
+          <th>Comune</th>
+          <th>Grado</th>
+          <th>Periodo da</th>
+          <th>Periodo a</th>
+          <th>Soggetto</th>
+          <th>Keywords</th>
     </tr>
-    
-		<% MyAdmin mA = new MyAdmin ();
-			List <Entity> listaEventi = mA.getEventData();
-			for(int i = 0; i<listaEventi.size(); i++){
-				%>
-		<tr id="<%=i%>" style="block; border:1px solid black">		
-		<td id="rTitolo<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("titolo").toString() %></td>
-	 	<td id="rAs<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("as").toString() %></td>
-	 	<td id="rScuola<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("scuola").toString() %></td>
-	 	<td id="rComune<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("comune").toString() %> 	</td>
-	 	<td id="rGrado<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("grado").toString() %> 	</td>
-	 	<td id="rPeriodoDa<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("periodo_da").toString() %></td>
-	 	<td id="rPeriodoA<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("periodo_a").toString() %></td>
-	 	<td id="rSoggetto<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("soggetto").toString() %></td>
-	 	<td id="rChiave<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("chiave").toString() %></td>
-	 	</tr>
-				<%
-		}
-		%>
-	
-	</table>
-	
-</div>
+   
+                    <% MyAdmin mA = new MyAdmin ();
+                              List <Entity> listaEventi = mA.getEventData();
+                              for(int i = 0; i<listaEventi.size(); i++){
+                                        %>
+                    <tr id="<%=i%>" style="block; border:1px solid black">            
+                    <td id="rTitolo<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("titolo").toString() %></td>
+                   <td id="rAs<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("as").toString() %></td>
+                   <td id="rScuola<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("scuola").toString() %></td>
+                   <td id="rComune<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("comune").toString() %></td>
+                   <td id="rGrado<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("grado").toString() %></td>
+                   <td id="rPeriodoDa<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("periodo_da").toString() %></td>
+                   <td id="rPeriodoA<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("periodo_a").toString() %></td>
+                   <td id="rSoggetto<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("soggetto").toString() %></td>
+                   <td id="rChiave<%=i%>" style="border:1px solid black"><%=listaEventi.get(i).getProperty("chiave").toString() %></td>
+                   </tr>
+                                        <%
+                    }
+                    %>
+         
+          </table>
+
+<h1>-----------------------------------------------------------</h1>
+<h1>Mappa Vanilla</h1>
+<div id="mapidV"></div>
+<h1>-----------------------------------------------------------</h1>
+
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
@@ -331,67 +349,6 @@ int contBC=0;
  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
  
  <script>
- 
- function Nascondi() {
-	if(document.getElementById("fTitolo").value != "---"){
-		for(let i = 0; i<<%=listaEventi.size()%>; i++){
-			if(document.getElementById("rTitolo"+i).innerHTML == document.getElementById("fTitolo").value){
-			}else{document.getElementById(i).style.display = "none";}
-		}
-	}
-	if(document.getElementById("fAs").value != "---"){
-		for(let i = 0; i<<%=listaEventi.size()%>; i++){
-			if(document.getElementById("rAs"+i).innerHTML == document.getElementById("fAs").value){
-			}else{document.getElementById(i).style.display = "none";}
-		}
-	}
-	if(document.getElementById("fScuola").value != "---"){
-		for(let i = 0; i<<%=listaEventi.size()%>; i++){
-			if(document.getElementById("rScuola"+i).innerHTML == document.getElementById("fScuola").value){
-			}else{document.getElementById(i).style.display = "none";}
-		}
-	}
-	if(document.getElementById("fComune").value != "---"){
-		for(let i = 0; i<<%=listaEventi.size()%>; i++){
-			if(document.getElementById("rComune"+i).innerHTML == document.getElementById("fComune").value){
-			}else{document.getElementById(i).style.display = "none";}
-		}
-	}
-	if(document.getElementById("fGrado").value != "---"){
-		for(let i = 0; i<<%=listaEventi.size()%>; i++){
-			if(document.getElementById("rGrado"+i).innerHTML == document.getElementById("fGrado").value){
-			}else{document.getElementById(i).style.display = "none";}
-		}
-	}
-	if(document.getElementById("fPeriodoDa").value != "---"){
-		for(let i = 0; i<<%=listaEventi.size()%>; i++){
-			if(document.getElementById("rPeriodoDa"+i).innerHTML == document.getElementById("fPeriodoDa").value){
-			}else{document.getElementById(i).style.display = "none";}
-		}
-	}
-	if(document.getElementById("fPeriodoA").value != "---"){
-		for(let i = 0; i<<%=listaEventi.size()%>; i++){
-			if(document.getElementById("rPeriodoA"+i).innerHTML == document.getElementById("fPeriodoA").value){
-			}else{document.getElementById(i).style.display = "none";}
-		}
-	}
-	if(document.getElementById("fSoggetto").value != "---"){
-		for(let i = 0; i<<%=listaEventi.size()%>; i++){
-			if(document.getElementById("rSoggetto"+i).innerHTML == document.getElementById("fSoggetto").value){
-			}else{document.getElementById(i).style.display = "none";}
-		}
-	}
-	if(document.getElementById("fChiave").value != "---"){
-		for(let i = 0; i<<%=listaEventi.size()%>; i++){
-			if(document.getElementById("rChiave"+i).innerHTML == document.getElementById("fChiave").value){
-			}else{document.getElementById(i).style.display = "none";}
-		}
-	}
- }
- 
-
- 
- 
  
  var mymap = L.map('mapidS').setView([44.781811, 10.854439], 14);
  L.tileLayer('https://api.maptiler.com/maps/toner/{z}/{x}/{y}.png?key=GYJ2vr5kpPhplU9c4Lja',{
@@ -757,5 +714,110 @@ function changeMap5(){
 	 }
 	 
  });
+ 
+ function Nascondi() {
+     if(document.getElementById("fTitolo").value != "---"){
+               for(let i = 0; i<<%=listaEventi.size()%>; i++){
+                         if(document.getElementById("rTitolo"+i).innerHTML == document.getElementById("fTitolo").value){
+                         }else{document.getElementById(i).style.display = "none";}
+               }
+     }
+     if(document.getElementById("fAs").value != "---"){
+               for(let i = 0; i<<%=listaEventi.size()%>; i++){
+                         if(document.getElementById("rAs"+i).innerHTML == document.getElementById("fAs").value){
+                         }else{document.getElementById(i).style.display = "none";}
+               }
+     }
+     if(document.getElementById("fScuola").value != "---"){
+               for(let i = 0; i<<%=listaEventi.size()%>; i++){
+                         if(document.getElementById("rScuola"+i).innerHTML == document.getElementById("fScuola").value){
+                         }else{document.getElementById(i).style.display = "none";}
+               }
+     }
+     if(document.getElementById("fComune").value != "---"){
+               for(let i = 0; i<<%=listaEventi.size()%>; i++){
+                         if(document.getElementById("rComune"+i).innerHTML == document.getElementById("fComune").value){
+                         }else{document.getElementById(i).style.display = "none";}
+               }
+     }
+     if(document.getElementById("fGrado").value != "---"){
+               for(let i = 0; i<<%=listaEventi.size()%>; i++){
+                         if(document.getElementById("rGrado"+i).innerHTML == document.getElementById("fGrado").value){
+                         }else{document.getElementById(i).style.display = "none";}
+               }
+     }
+     if(document.getElementById("fPeriodoDa").value != "---"){
+               for(let i = 0; i<<%=listaEventi.size()%>; i++){
+                         if(document.getElementById("rPeriodoDa"+i).innerHTML == document.getElementById("fPeriodoDa").value){
+                         }else{document.getElementById(i).style.display = "none";}
+               }
+     }
+     if(document.getElementById("fPeriodoA").value != "---"){
+               for(let i = 0; i<<%=listaEventi.size()%>; i++){
+                         if(document.getElementById("rPeriodoA"+i).innerHTML == document.getElementById("fPeriodoA").value){
+                         }else{document.getElementById(i).style.display = "none";}
+               }
+     }
+     if(document.getElementById("fSoggetto").value != "---"){
+               for(let i = 0; i<<%=listaEventi.size()%>; i++){
+                         if(document.getElementById("rSoggetto"+i).innerHTML == document.getElementById("fSoggetto").value){
+                         }else{document.getElementById(i).style.display = "none";}
+               }
+     }
+     if(document.getElementById("fChiave").value != "---"){
+               for(let i = 0; i<<%=listaEventi.size()%>; i++){
+                         if(document.getElementById("rChiave"+i).innerHTML == document.getElementById("fChiave").value){
+                         }else{document.getElementById(i).style.display = "none";}
+               }
+     }
+     
+     
+     var array = [];
+     var NomLatLonS = [];
+     
+    for(let i = 0; i<<%=listaEventi.size()%>;i++){
+    	if(document.getElementById(i).style.display != "none"){
+    		<%System.out.println("cacca");%>
+    		array.push(document.getElementById("rScuola"+i).innerHTML);
+    	}
+    }
+	
+ 	
+ 	var arrayScuoleSel = [];
+ 	for(let i = 0; i<array.length; i++){
+ 		if(!arrayScuoleSel.includes(array[i])){	
+ 			arrayScuoleSel.push (array[i]);
+ 		}
+ 	}
+ 	
+ 	 
+ 			 <%for(String j:scuoleCord.keySet()){%>
+ 			 	NomLatLonS.push([["<%=j%>"],[<%=scuoleCord.get(j).get(0)%>],[<%=scuoleCord.get(j).get(1)%>]]);
+ 			<%}%>
+ 		 
+ 	console.log(NomLatLonS);
+ 	 
+ 	 
+
+ 	
+ 		for(let j=0; j<NomLatLonS.length;j++){
+ 			for(let i = 0; i<arrayScuoleSel.length; i++){
+ 			if(arrayScuoleSel[i]==NomLatLonS[j][0]){
+ 				console.log(NomLatLonS[j][1]);
+ 		 var m=L.marker([ parseFloat(NomLatLonS[j][1]), parseFloat(NomLatLonS[j][2])]).addTo(mymapV);
+ 		     m.bindPopup(arrayScuoleSel[i]);
+ 			}
+ 	}
+ 	}
+ }
+ 
+ var mymapV = L.map('mapidV').setView([44.781811, 10.854439], 14);
+ L.tileLayer('https://api.maptiler.com/maps/toner/{z}/{x}/{y}.png?key=GYJ2vr5kpPhplU9c4Lja',{
+	 attribution:'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+	 
+ }).addTo(mymapV);
+ 
+ 
+
  </script>
 </html>

@@ -145,7 +145,7 @@ public class MyAdminUpload extends HttpServlet {
 			e.printStackTrace();
 
 		}
-			
+		response.sendRedirect("/index.jsp");
 			System.out.println("file creato :D, Questo testo non verrà mai stampato!");  
 		}
 	  

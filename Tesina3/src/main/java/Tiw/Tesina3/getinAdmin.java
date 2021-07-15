@@ -31,16 +31,18 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 		System.out.println("ESISTE LO USER");
 		
 		if(logCred.get(user).trim().equals(pass.trim())) {     //HashMap.get(CHIAVEUSER) = PASSWORD
-			response.sendRedirect("/home.jsp");
+			
 			System.out.println("E LA PASSWORD E' CORRETTA");
 			response.sendRedirect("/index.jsp");
 		}
 		else {
 			System.out.println("MA LA PASSWORD NON COINCIDE. Hai inserito "+pass+" dovevi inserire "+logCred.get(user));
+			response.sendRedirect("/loginAdmin.jsp");
 		}	
 	}
 	else {
 		System.out.println("LO USER NON ESISTE");
+		response.sendRedirect("/loginAdmin.jsp");
 	}
 	
 }
